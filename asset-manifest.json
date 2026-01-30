@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/ha-kirya/static/css/main.9be97b8b.css",
-    "main.js": "/ha-kirya/static/js/main.d81eaeab.js",
+    "main.js": "/ha-kirya/static/js/main.8d745539.js",
     "index.html": "/ha-kirya/index.html",
     "main.9be97b8b.css.map": "/ha-kirya/static/css/main.9be97b8b.css.map",
-    "main.d81eaeab.js.map": "/ha-kirya/static/js/main.d81eaeab.js.map"
+    "main.8d745539.js.map": "/ha-kirya/static/js/main.8d745539.js.map"
   },
   "entrypoints": [
     "static/css/main.9be97b8b.css",
-    "static/js/main.d81eaeab.js"
+    "static/js/main.8d745539.js"
   ]
 }
