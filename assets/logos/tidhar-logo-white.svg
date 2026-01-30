@@ -1,0 +1,11 @@
+<svg width="120" height="40" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- TIDHAR text -->
+  <text x="10" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">TIDHAR</text>
+  
+  <!-- Subtitle -->
+  <text x="10" y="35" font-family="Arial, sans-serif" font-size="8" fill="white" opacity="0.8">CONSTRUCTION</text>
+  
+  <!-- Simple geometric icon -->
+  <polygon points="95,28 100,18 105,28" fill="white"/>
+  <rect x="97" y="22" width="6" height="6" fill="white" opacity="0.8"/>
+</svg>
