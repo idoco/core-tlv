@@ -1,12 +1,12 @@
-# TRUE Tel Aviv - Website Clone
+# Keren HaKirya - Website Clone
 
-A React-based clone of the TRUE Tel Aviv real estate website.
+A React-based clone of the Keren HaKirya real estate website.
 
 ## Features
 
 - ✅ Bilingual support (Hebrew/English) with RTL/LTR switching
 - ✅ Responsive design (mobile & desktop)
-- ✅ Video hero section
+- ✅ Hero section with image
 - ✅ Contact form modal (ready for Lambda integration)
 - ✅ Navigation menu with 7 main pages
 - ✅ Static file serving (no backend needed)
@@ -14,7 +14,7 @@ A React-based clone of the TRUE Tel Aviv real estate website.
 ## Project Structure
 
 ```
-true-tlv-clone/
+ha-kirya/
 ├── public/
 │   ├── index.html
 │   └── assets/
@@ -60,11 +60,8 @@ public/
     │   ├── logo-dark.svg
     │   ├── gavyam-logo.svg
     │   └── tidhar-logo-white.svg
-    ├── images/
-    │   └── image-001.png
-    └── videos/
-        ├── TRUE-rova_Low.mp4
-        └── start-true-placeholder.webp
+    └── images/
+        └── image-001.png
 ```
 
 ### 3. Run Development Server
@@ -164,7 +161,7 @@ aws s3 sync build/ s3://your-bucket-name --delete
 - The site is fully static - no server-side rendering needed
 - All navigation is client-side (React Router)
 - Form submissions require external API/Lambda setup
-- Video autoplay works best on modern browsers with user interaction
+- Mobile floating CTA button appears on scroll
 
 ## Next Steps
 

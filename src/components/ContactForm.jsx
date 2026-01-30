@@ -50,7 +50,7 @@ const ContactForm = ({ language, onClose }) => {
         <div className="modal-header">
           <img 
             src="/assets/logos/logo-white.svg" 
-            alt="TRUE Tel Aviv" 
+            alt="Keren HaKirya" 
             className="modal-logo"
           />
           <h2>{language === 'he' ? 'שניפגש?' : "Let's Meet"}</h2>

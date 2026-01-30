@@ -36,7 +36,7 @@ const Header = ({ language, setLanguage }) => {
         <Link to="/" className="logo">
           <img 
             src="/assets/logos/logo-white.svg" 
-            alt="TRUE Tel Aviv" 
+            alt="Keren HaKirya" 
             className="logo-img"
           />
         </Link>
