@@ -35,8 +35,8 @@ const Header = ({ language, setLanguage }) => {
       <div className="header-container">
         <Link to="/" className="logo">
           <img 
-            src="/assets/logos/logo-white.svg" 
-            alt="Keren HaKirya" 
+            src={`${process.env.PUBLIC_URL}/assets/logos/logo-white.svg`} 
+            alt="CORE TLV" 
             className="logo-img"
           />
         </Link>

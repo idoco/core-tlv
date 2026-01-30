@@ -1,6 +1,6 @@
-# Keren HaKirya - Website Clone
+# CORE TLV - Website Clone
 
-A React-based clone of the Keren HaKirya real estate website.
+A React-based clone of the CORE TLV real estate website.
 
 ## Features
 
@@ -14,7 +14,7 @@ A React-based clone of the Keren HaKirya real estate website.
 ## Project Structure
 
 ```
-ha-kirya/
+core-tlv/
 ├── public/
 │   ├── index.html
 │   └── assets/

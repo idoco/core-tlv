@@ -49,8 +49,8 @@ const ContactForm = ({ language, onClose }) => {
         
         <div className="modal-header">
           <img 
-            src="/assets/logos/logo-white.svg" 
-            alt="Keren HaKirya" 
+            src={`${process.env.PUBLIC_URL}/assets/logos/logo-white.svg`} 
+            alt="CORE TLV" 
             className="modal-logo"
           />
           <h2>{language === 'he' ? 'שניפגש?' : "Let's Meet"}</h2>
