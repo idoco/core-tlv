@@ -1,0 +1,137 @@
+.home {
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.hero-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 100%);
+}
+
+/* Content Section */
+.content-section {
+  padding: 80px 0;
+  background-color: #fff;
+}
+
+.main-heading {
+  font-size: 48px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  line-height: 1.3;
+  color: #000;
+}
+
+.sub-heading {
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: 40px;
+  color: #666;
+}
+
+.description {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  color: #333;
+  max-width: 900px;
+}
+
+.location-text {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 50px;
+  color: #333;
+  max-width: 900px;
+}
+
+.project-image {
+  margin: 60px 0;
+  text-align: center;
+}
+
+.project-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.cta-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 18px 40px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none;
+}
+
+.cta-button:hover {
+  background-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    height: 50vh;
+    min-height: 400px;
+  }
+
+  .content-section {
+    padding: 40px 0;
+  }
+
+  .main-heading {
+    font-size: 32px;
+  }
+
+  .sub-heading {
+    font-size: 24px;
+  }
+
+  .description,
+  .location-text {
+    font-size: 16px;
+  }
+}
+
+/* RTL Adjustments */
+[dir="ltr"] .description,
+[dir="ltr"] .location-text {
+  text-align: left;
+}
+
+[dir="rtl"] .description,
+[dir="rtl"] .location-text {
+  text-align: right;
+}

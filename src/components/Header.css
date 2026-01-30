@@ -1,0 +1,149 @@
+.header {
+  background-color: #000;
+  color: #fff;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+/* RTL: Logo on right, nav/hamburger on left */
+[dir="rtl"] .header-container {
+  flex-direction: row-reverse;
+}
+
+/* LTR: Logo on left, nav/hamburger on right */
+[dir="ltr"] .header-container {
+  flex-direction: row;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+/* Desktop Navigation */
+.nav-desktop {
+  display: none;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+}
+
+.lang-switch {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.lang-switch:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Mobile Navigation */
+.nav-mobile {
+  background-color: #000;
+  padding: 20px 0;
+}
+
+.nav-list-mobile {
+  list-style: none;
+  padding: 0 40px;
+}
+
+.nav-list-mobile li {
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-list-mobile .nav-link {
+  display: block;
+  font-size: 16px;
+}
+
+.nav-list-mobile .lang-switch {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Desktop View */
+@media (min-width: 769px) {
+  .nav-desktop {
+    display: block;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+  }
+
+  .nav-mobile {
+    display: none;
+  }
+}
+
+/* RTL Adjustments for nav list */
+[dir="rtl"] .nav-list {
+  flex-direction: row-reverse;
+}
+
+[dir="ltr"] .nav-list {
+  flex-direction: row;
+}
+
+/* RTL Adjustments for mobile menu text alignment */
+[dir="rtl"] .nav-list-mobile {
+  text-align: right;
+}
+
+[dir="ltr"] .nav-list-mobile {
+  text-align: left;
+}

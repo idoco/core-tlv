@@ -1,0 +1,141 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal-content {
+  background-color: #000;
+  color: #fff;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  border-radius: 2px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+}
+
+[dir="rtl"] .modal-close {
+  right: auto;
+  left: 20px;
+}
+
+.modal-close:hover {
+  opacity: 0.7;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.modal-logo {
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.modal-header p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.checkbox-group {
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.checkbox-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-submit {
+  padding: 15px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 30px 20px;
+  }
+}
