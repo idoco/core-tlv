@@ -1,5 +1,5 @@
 .header {
-  background-color: #000;
+  background-color: var(--brand-dark);
   color: #fff;
   padding: 20px 0;
   position: sticky;
@@ -28,8 +28,10 @@
 }
 
 .logo-img {
-  height: 40px;
+  display: block;
+  height: 52px;
   width: auto;
+  max-width: min(220px, 42vw);
 }
 
 /* Desktop Navigation */
@@ -90,7 +92,7 @@
 
 /* Mobile Navigation */
 .nav-mobile {
-  background-color: #000;
+  background-color: var(--brand-dark);
   padding: 20px 0;
 }
 
@@ -146,4 +148,19 @@
 
 [dir="ltr"] .nav-list-mobile {
   text-align: left;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 14px 0;
+  }
+
+  .header-container {
+    padding: 0 20px;
+  }
+
+  .logo-img {
+    height: 40px;
+    max-width: 160px;
+  }
 }

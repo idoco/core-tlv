@@ -23,12 +23,12 @@ const Footer = ({ language }) => {
 
         <div className="footer-logos">
           <img
-            src={`${process.env.PUBLIC_URL}/assets/logos/logo-white.svg`}
+            src={`${process.env.PUBLIC_URL}/assets/logos/logo-main-transparent.png`}
             alt="CORE TLV logo"
             className="partner-logo"
           />
           <img
-            src={`${process.env.PUBLIC_URL}/assets/logos/logo-white.svg`}
+            src={`${process.env.PUBLIC_URL}/assets/logos/logo-main-transparent.png`}
             alt="CORE TLV logo"
             className="partner-logo"
           />

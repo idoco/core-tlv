@@ -5,6 +5,48 @@
   color: #111;
 }
 
+.architecture-page {
+  background: #ebebeb;
+  min-height: 60vh;
+  padding: 64px 0 40px;
+  color: #111;
+}
+
+.architecture-container {
+  max-width: 1180px;
+}
+
+.architecture-hero {
+  display: grid;
+  gap: 28px;
+  margin-bottom: 44px;
+}
+
+.architecture-logo {
+  width: min(100%, 760px);
+  height: auto;
+}
+
+.architecture-title {
+  margin: 0;
+  font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+  line-height: 0.98;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.architecture-copy {
+  max-width: 980px;
+  display: grid;
+  gap: 28px;
+}
+
+.architecture-paragraph {
+  margin: 0;
+  font-size: 1.18rem;
+  line-height: 1.9;
+}
+
 .specs-section + .specs-section {
   margin-top: 72px;
 }
@@ -82,6 +124,34 @@
 }
 
 @media (max-width: 768px) {
+  .architecture-page {
+    padding: 28px 0 24px;
+  }
+
+  .architecture-hero {
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .architecture-logo {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .architecture-title {
+    font-size: clamp(2rem, 10vw, 2.9rem);
+    line-height: 1.02;
+  }
+
+  .architecture-copy {
+    gap: 18px;
+  }
+
+  .architecture-paragraph {
+    font-size: 0.98rem;
+    line-height: 1.8;
+  }
+
   .specs-page {
     padding: 36px 0 0;
   }

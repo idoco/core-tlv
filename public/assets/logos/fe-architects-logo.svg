@@ -1,0 +1,10 @@
+<svg width="2048" height="410" viewBox="0 0 2048 410" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="2048" height="410" fill="none"/>
+  <g transform="translate(0 -33)">
+    <path d="M81 70H243V116H132V172H233V217H132V312H81V70Z" fill="#69696B"/>
+    <path d="M517 70H679V116H568V170H659V215H568V266H679V312H517V70Z" fill="#69696B" transform="translate(30 0)"/>
+    <path d="M334 70H386L375 131H420L431 70H483L472 131H522V171H464L455 224H507V264H449L439 312H387L397 264H352L342 312H290L300 264H248V224H307L316 171H266V131H323L334 70ZM360 224H405L414 171H369L360 224Z" fill="#A73440" transform="translate(10 0)"/>
+  </g>
+  <text x="768" y="120" fill="#A73440" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="300" letter-spacing="8">FISHER ELHANANY</text>
+  <text x="768" y="272" fill="#5E5E63" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="200" letter-spacing="22">ARCHITECTS</text>
+</svg>

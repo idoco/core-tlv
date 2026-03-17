@@ -239,7 +239,51 @@ const SpecificationsPage = ({ language = 'he' }) => {
   );
 };
 
-export const Architecture = () => <PlaceholderPage title="Architecture / אדריכלות" />;
+const architectureContent = {
+  he: {
+    title: 'פישר אלחנני אדריכלים',
+    paragraphs: [
+      'משרד פישר אלחנני אדריכלים הוא משרד צעיר, דינמי ורב־תחומי, הפועל מתוך חשיבה עדכנית ושאיפה לפתרונות תכנוניים מדויקים ויצירתיים. המשרד מספק שירותי אדריכלות ותכנון עירוני לגופים מובילים במשק, ומשלב ניסיון של עשרות שנים בפרויקטים רחבי היקף בתחומי המגורים, המסחר, התעשייה והמרחב הציבורי. עבודת המשרד מתאפיינת בגמישות מחשבתית, שליטה בתהליכים סטטוטוריים מורכבים ושימוש בכלי תכנון מתקדמים, לצד מחויבות לאיכות, מקצועיות ותיאום מלא מול כלל הגורמים בפרויקט.',
+      'ייחודו של המשרד בא לידי ביטוי גם ביכולתו לקדם פרויקטים ביעילות גבוהה, בין היתר בזכות היתר לביצוע פרויקטים ברישוי עצמי, המאפשר קיצור משמעותי בלוחות הזמנים לקבלת היתר בנייה. לצד זאת, למשרד ניסיון רחב בתכנון בנייה רוויה, בעיקר באזור המרכז ותל אביב, תוך התאמה להקשר האורבני הצפוף והמורכב. הגישה התכנונית משלבת בין ראייה עירונית רחבה לבין פתרונות אדריכליים מדויקים בקנה מידה אנושי, ויוצרת סביבה פונקציונלית, מוארת ונגישה, המחברת בין המבנה, המשתמש והעיר.',
+    ],
+  },
+  en: {
+    title: 'Fisher Elhanani Architects',
+    paragraphs: [
+      'Fisher Elhanani Architects is a young, dynamic, multidisciplinary practice driven by contemporary thinking and a commitment to precise, creative planning solutions. The office provides architectural and urban planning services to leading organizations in Israel and brings together decades of experience across large-scale residential, commercial, industrial, and public-space projects. Its work is defined by intellectual flexibility, command of complex statutory processes, and the use of advanced planning tools, alongside a strong commitment to quality, professionalism, and full coordination with all project stakeholders.',
+      'The firm’s distinctive edge is also reflected in its ability to advance projects with exceptional efficiency, including through authorization to carry out self-licensing processes that can significantly shorten the timeline for obtaining building permits. In parallel, the office has extensive experience in high-density residential planning, especially in central Israel and Tel Aviv, with solutions tailored to dense and complex urban contexts. Its design approach combines a broad urban perspective with precise, human-scale architectural solutions, creating environments that are functional, light-filled, and accessible, and that connect the building, its users, and the city.',
+    ],
+  },
+};
+
+const ArchitecturePage = ({ language = 'he' }) => {
+  const content = architectureContent[language] || architectureContent.he;
+
+  return (
+    <div className="architecture-page" dir={language === 'he' ? 'rtl' : 'ltr'}>
+      <div className="container architecture-container">
+        <section className="architecture-hero">
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/logos/fe-architects-logo.svg`}
+            alt={language === 'he' ? 'לוגו פישר אלחנני אדריכלים' : 'Fisher Elhanani Architects logo'}
+            className="architecture-logo"
+          />
+          <h1 className="architecture-title">{content.title}</h1>
+        </section>
+
+        <section className="architecture-copy">
+          {content.paragraphs.map((paragraph) => (
+            <p key={paragraph} className="architecture-paragraph">
+              {paragraph}
+            </p>
+          ))}
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export const Architecture = ({ language }) => <ArchitecturePage language={language} />;
 export const Apartments = () => <PlaceholderPage title="Apartments / דירות" />;
 export const Plans = () => <PlaceholderPage title="Apartment Plans / תוכניות דירה" />;
 export const Specifications = ({ language }) => <SpecificationsPage language={language} />;
