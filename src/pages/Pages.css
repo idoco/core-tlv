@@ -108,13 +108,13 @@
 }
 
 .location-map-popup-inner {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(255, 251, 246, 0.96);
   border: 1px solid rgba(34, 34, 34, 0.14);
   box-shadow: 0 10px 24px rgba(55, 44, 33, 0.12);
   color: #111;
-  font-size: 0.82rem;
+  font-size: 0.67rem;
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
@@ -291,6 +291,33 @@
   .location-map-frame,
   .location-map-canvas {
     min-height: 420px;
+  }
+
+  .location-map-canvas .maplibregl-ctrl-top-right {
+    top: 14px;
+    right: 14px;
+  }
+
+  .location-map-canvas .maplibregl-ctrl-group button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .location-map-popup-inner {
+    padding: 5px 8px;
+    font-size: 0.6rem;
+    box-shadow: 0 8px 18px rgba(55, 44, 33, 0.1);
+  }
+
+  .location-map-popup-inner-project {
+    padding: 9px 13px;
+    font-size: 0.94rem;
+    box-shadow: 0 10px 22px rgba(55, 44, 33, 0.14);
+  }
+
+  .location-map-distance-label {
+    padding: 2px 6px;
+    font-size: 0.66rem;
   }
 
   .specs-page {

@@ -286,6 +286,7 @@ const ArchitecturePage = ({ language = 'he' }) => {
 
 const LOCATION_CENTER = [34.791929, 32.077509];
 const LOCATION_DEFAULT_VIEW = [34.7899, 32.0792];
+const LOCATION_DEFAULT_VIEW_MOBILE = [34.7908, 32.0784];
 const LOCATION_STYLE = 'https://tiles.openfreemap.org/styles/positron';
 const LOCATION_POIS = [
   {
@@ -295,6 +296,7 @@ const LOCATION_POIS = [
     },
     icon: 'district',
     coordinates: [34.78978, 32.08676],
+    mobileVisible: true,
   },
   {
     name: {
@@ -303,6 +305,7 @@ const LOCATION_POIS = [
     },
     icon: 'train',
     coordinates: [34.79725, 32.08374],
+    mobileVisible: true,
   },
   {
     name: {
@@ -311,6 +314,7 @@ const LOCATION_POIS = [
     },
     icon: 'hospital',
     coordinates: [34.79018, 32.08033],
+    mobileVisible: true,
   },
   {
     name: {
@@ -319,6 +323,7 @@ const LOCATION_POIS = [
     },
     icon: 'landmark',
     coordinates: [34.78059, 32.08061],
+    mobileVisible: false,
   },
   {
     name: {
@@ -329,6 +334,7 @@ const LOCATION_POIS = [
     coordinates: [34.78687, 32.07768],
     chipAnchor: 'top',
     chipOffset: [0, 18],
+    mobileVisible: true,
   },
   {
     name: {
@@ -337,6 +343,7 @@ const LOCATION_POIS = [
     },
     icon: 'civic',
     coordinates: [34.78775, 32.07779],
+    mobileVisible: true,
   },
   {
     name: {
@@ -347,6 +354,7 @@ const LOCATION_POIS = [
     coordinates: [34.79216, 32.07692],
     chipAnchor: 'left',
     chipOffset: [18, 0],
+    mobileVisible: true,
   },
   {
     name: {
@@ -355,6 +363,7 @@ const LOCATION_POIS = [
     },
     icon: 'theater',
     coordinates: [34.78489, 32.07407],
+    mobileVisible: true,
   },
   {
     name: {
@@ -363,6 +372,7 @@ const LOCATION_POIS = [
     },
     icon: 'theater',
     coordinates: [34.77902, 32.07281],
+    mobileVisible: false,
   },
   {
     name: {
@@ -371,6 +381,7 @@ const LOCATION_POIS = [
     },
     icon: 'shopping',
     coordinates: [34.78411, 32.06864],
+    mobileVisible: false,
   },
   {
     name: {
@@ -379,6 +390,7 @@ const LOCATION_POIS = [
     },
     icon: 'district',
     coordinates: [34.78715, 32.07226],
+    mobileVisible: false,
   },
   {
     name: {
@@ -387,6 +399,7 @@ const LOCATION_POIS = [
     },
     icon: 'tower',
     coordinates: [34.79186, 32.07473],
+    mobileVisible: true,
   },
 ];
 
@@ -524,6 +537,8 @@ const LocationMap = ({ language = 'he' }) => {
     }
 
     let isCancelled = false;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const visiblePois = LOCATION_POIS;
 
     const initMap = async () => {
       const { default: maplibregl } = await import('maplibre-gl');
@@ -535,8 +550,8 @@ const LocationMap = ({ language = 'he' }) => {
       const map = new maplibregl.Map({
         container: mapRef.current,
         style: LOCATION_STYLE,
-        center: LOCATION_DEFAULT_VIEW,
-        zoom: 14.2,
+        center: isMobile ? LOCATION_DEFAULT_VIEW_MOBILE : LOCATION_DEFAULT_VIEW,
+        zoom: isMobile ? 13.8 : 14.2,
         pitch: 0,
         bearing: 0,
         attributionControl: false,
@@ -556,7 +571,7 @@ const LocationMap = ({ language = 'he' }) => {
         });
 
         await Promise.all(
-          [...new Set(LOCATION_POIS.map((poi) => poi.icon))].map((iconName) =>
+          [...new Set(visiblePois.map((poi) => poi.icon))].map((iconName) =>
             addMapImage(map, `poi-${iconName}`, createPoiSvg(iconName))
           )
         );
@@ -595,7 +610,7 @@ const LocationMap = ({ language = 'he' }) => {
           type: 'geojson',
           data: {
             type: 'FeatureCollection',
-            features: LOCATION_POIS.map((poi) => ({
+            features: visiblePois.map((poi) => ({
               type: 'Feature',
               properties: {
                 name: poi.name,
@@ -610,24 +625,37 @@ const LocationMap = ({ language = 'he' }) => {
         });
 
         map.addLayer({
+          id: 'project-distance-rings-fill',
+          type: 'fill',
+          source: 'project-distance-rings',
+          paint: {
+            'fill-color': 'rgba(181, 95, 60, 0.025)',
+            'fill-outline-color': 'rgba(181, 95, 60, 0)',
+          },
+        });
+
+        map.addLayer({
           id: 'project-distance-rings',
           type: 'line',
           source: 'project-distance-rings',
           paint: {
-            'line-color': 'rgba(181, 95, 60, 0.34)',
-            'line-width': 3,
-            'line-dasharray': [1.4, 2],
+            'line-color': isMobile ? 'rgba(181, 95, 60, 0.42)' : 'rgba(181, 95, 60, 0.36)',
+            'line-width': isMobile ? 1.9 : 2.4,
           },
         });
 
         distancePopupsRef.current = [
           {
             label: content.distance500,
-            coordinates: [LOCATION_CENTER[0], LOCATION_CENTER[1] + 0.0045],
+            coordinates: isMobile
+              ? [LOCATION_CENTER[0], LOCATION_CENTER[1] - 0.004]
+              : [LOCATION_CENTER[0], LOCATION_CENTER[1] - 0.0041],
           },
           {
             label: content.distance1000,
-            coordinates: [LOCATION_CENTER[0], LOCATION_CENTER[1] + 0.009],
+            coordinates: isMobile
+              ? [LOCATION_CENTER[0], LOCATION_CENTER[1] - 0.0084]
+              : [LOCATION_CENTER[0], LOCATION_CENTER[1] - 0.0086],
           },
         ].map((item) =>
           new maplibregl.Popup({
@@ -650,7 +678,7 @@ const LocationMap = ({ language = 'he' }) => {
           source: 'nearby-pois',
           layout: {
             'icon-image': ['get', 'icon'],
-            'icon-size': 0.92,
+            'icon-size': isMobile ? 0.82 : 0.92,
             'icon-allow-overlap': true,
             'icon-ignore-placement': true,
           },
@@ -661,7 +689,7 @@ const LocationMap = ({ language = 'he' }) => {
           type: 'circle',
           source: 'project-location',
           paint: {
-            'circle-radius': 10,
+            'circle-radius': isMobile ? 9 : 10,
             'circle-color': '#b55f3c',
             'circle-stroke-color': 'rgba(255, 248, 241, 0.96)',
             'circle-stroke-width': 4,
@@ -673,7 +701,7 @@ const LocationMap = ({ language = 'he' }) => {
           closeOnClick: false,
           closeOnMove: false,
           focusAfterOpen: false,
-          offset: [0, -28],
+          offset: isMobile ? [0, -24] : [0, -28],
           anchor: 'bottom',
           className: 'location-map-popup location-map-popup-project',
         })
@@ -683,15 +711,15 @@ const LocationMap = ({ language = 'he' }) => {
           )
           .addTo(map);
 
-        poiPopupsRef.current = LOCATION_POIS.map((poi) =>
+        poiPopupsRef.current = visiblePois.map((poi) =>
           new maplibregl.Popup({
             closeButton: false,
             closeOnClick: false,
             closeOnMove: false,
             focusAfterOpen: false,
-            offset: poi.chipOffset || [0, -22],
+            offset: isMobile ? [0, -16] : (poi.chipOffset || [0, -22]),
             anchor: poi.chipAnchor || 'bottom',
-            className: 'location-map-popup',
+            className: `location-map-popup${isMobile ? ' location-map-popup-mobile' : ''}`,
           })
             .setLngLat(poi.coordinates)
             .setHTML(
