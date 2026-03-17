@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import './Pages.css';
 
 const PlaceholderPage = ({ title }) => {
@@ -283,10 +284,153 @@ const ArchitecturePage = ({ language = 'he' }) => {
   );
 };
 
+const LOCATION_CENTER = [34.791929, 32.077509];
+const LOCATION_STYLE = 'https://tiles.openfreemap.org/styles/positron';
+
+const LocationMap = () => {
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+
+  useEffect(() => {
+    if (!mapRef.current || mapInstanceRef.current) {
+      return undefined;
+    }
+
+    let isCancelled = false;
+
+    const initMap = async () => {
+      const { default: maplibregl } = await import('maplibre-gl');
+
+      if (isCancelled || !mapRef.current || mapInstanceRef.current) {
+        return;
+      }
+
+      const map = new maplibregl.Map({
+        container: mapRef.current,
+        style: LOCATION_STYLE,
+        center: LOCATION_CENTER,
+        zoom: 14.3,
+        pitch: 0,
+        bearing: 0,
+        attributionControl: false,
+      });
+
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+
+      map.once('load', () => {
+        const layers = map.getStyle()?.layers || [];
+
+        layers.forEach((layer) => {
+          if (layer.type === 'symbol') {
+            map.setLayoutProperty(layer.id, 'visibility', 'none');
+          }
+        });
+
+        map.addSource('project-location', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                properties: {
+                  title: 'CORE-TLV',
+                },
+                geometry: {
+                  type: 'Point',
+                  coordinates: LOCATION_CENTER,
+                },
+              },
+            ],
+          },
+        });
+
+        map.addLayer({
+          id: 'project-location-ring',
+          type: 'circle',
+          source: 'project-location',
+          paint: {
+            'circle-radius': 42,
+            'circle-color': 'rgba(181, 95, 60, 0)',
+            'circle-stroke-color': 'rgba(181, 95, 60, 0.26)',
+            'circle-stroke-width': 2,
+          },
+        });
+
+        map.addLayer({
+          id: 'project-location-point',
+          type: 'circle',
+          source: 'project-location',
+          paint: {
+            'circle-radius': 10,
+            'circle-color': '#b55f3c',
+            'circle-stroke-color': 'rgba(255, 248, 241, 0.96)',
+            'circle-stroke-width': 4,
+          },
+        });
+
+        map.addLayer({
+          id: 'project-location-label',
+          type: 'symbol',
+          source: 'project-location',
+          layout: {
+            'text-field': ['get', 'title'],
+            'text-font': ['Open Sans Semibold'],
+            'text-size': 13,
+            'text-letter-spacing': 0.18,
+            'text-transform': 'uppercase',
+            'text-offset': [0, -2.6],
+            'text-anchor': 'bottom',
+            'text-allow-overlap': true,
+          },
+          paint: {
+            'text-color': '#111111',
+            'text-halo-color': 'rgba(255, 251, 246, 0.96)',
+            'text-halo-width': 6,
+            'text-halo-blur': 0.6,
+          },
+        });
+      });
+
+      mapInstanceRef.current = map;
+    };
+
+    initMap();
+
+    return () => {
+      isCancelled = true;
+
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+      }
+
+      mapInstanceRef.current = null;
+    };
+  }, []);
+
+  return <div ref={mapRef} className="location-map-canvas" />;
+};
+
+const LocationPage = ({ language = 'he' }) => {
+  return (
+    <div className="location-page" dir={language === 'he' ? 'rtl' : 'ltr'}>
+      <div className="container location-container">
+        <section className="location-map-section" aria-label="Project location map">
+          <div className="location-map-shell">
+            <div className="location-map-frame">
+              <LocationMap />
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
 export const Architecture = ({ language }) => <ArchitecturePage language={language} />;
 export const Apartments = () => <PlaceholderPage title="Apartments / דירות" />;
 export const Plans = () => <PlaceholderPage title="Apartment Plans / תוכניות דירה" />;
 export const Specifications = ({ language }) => <SpecificationsPage language={language} />;
 export const Facilities = () => <PlaceholderPage title="Common Areas / מתחמים משותפים" />;
-export const Location = () => <PlaceholderPage title="Location / לוקיישן" />;
+export const Location = ({ language }) => <LocationPage language={language} />;
 export const About = () => <PlaceholderPage title="Developers / היזמים" />;

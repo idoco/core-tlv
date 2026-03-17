@@ -51,7 +51,7 @@ function App() {
             <Route path="/plans" element={<Plans />} />
             <Route path="/specifications" element={<Specifications language={language} />} />
             <Route path="/facilities" element={<Facilities />} />
-            <Route path="/location" element={<Location />} />
+            <Route path="/location" element={<Location language={language} />} />
             <Route path="/about" element={<About />} />
           </Routes>
         </main>
