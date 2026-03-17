@@ -503,8 +503,8 @@ const createDistanceCircle = (center, radiusInMeters, steps = 96) => {
       radius: radiusInMeters,
     },
     geometry: {
-      type: 'Polygon',
-      coordinates: [coordinates],
+      type: 'LineString',
+      coordinates,
     },
   };
 };
@@ -621,16 +621,6 @@ const LocationMap = ({ language = 'he' }) => {
                 coordinates: poi.coordinates,
               },
             })),
-          },
-        });
-
-        map.addLayer({
-          id: 'project-distance-rings-fill',
-          type: 'fill',
-          source: 'project-distance-rings',
-          paint: {
-            'fill-color': 'rgba(181, 95, 60, 0.025)',
-            'fill-outline-color': 'rgba(181, 95, 60, 0)',
           },
         });
 
