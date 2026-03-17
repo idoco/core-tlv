@@ -550,6 +550,67 @@ const createDistanceCircle = (center, radiusInMeters, steps = 96) => {
   };
 };
 
+const isFiniteCoordinate = (value) => typeof value === 'number' && Number.isFinite(value);
+
+const validateLngLat = (coordinates, label) => {
+  if (!Array.isArray(coordinates) || coordinates.length !== 2) {
+    throw new Error(`${label}: expected [lng, lat], received ${JSON.stringify(coordinates)}`);
+  }
+
+  const [lng, lat] = coordinates;
+
+  if (!isFiniteCoordinate(lng) || !isFiniteCoordinate(lat)) {
+    throw new Error(`${label}: coordinates must be finite numbers, received ${JSON.stringify(coordinates)}`);
+  }
+};
+
+const validateFeatureCoordinates = (feature, label) => {
+  if (!feature?.geometry) {
+    throw new Error(`${label}: missing geometry`);
+  }
+
+  if (feature.geometry.type === 'Point') {
+    validateLngLat(feature.geometry.coordinates, `${label} point`);
+    return;
+  }
+
+  if (feature.geometry.type === 'LineString') {
+    if (!Array.isArray(feature.geometry.coordinates) || feature.geometry.coordinates.length < 2) {
+      throw new Error(`${label}: line requires at least two coordinates`);
+    }
+
+    feature.geometry.coordinates.forEach((coordinates, index) => {
+      validateLngLat(coordinates, `${label} point ${index}`);
+    });
+    return;
+  }
+
+  throw new Error(`${label}: unsupported geometry type ${feature.geometry.type}`);
+};
+
+const addGeoJsonSource = (map, sourceId, data) => {
+  if (data?.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
+    throw new Error(`${sourceId}: invalid GeoJSON FeatureCollection`);
+  }
+
+  data.features.forEach((feature, index) => {
+    validateFeatureCoordinates(feature, `${sourceId} feature ${index}`);
+  });
+
+  try {
+    map.addSource(sourceId, {
+      type: 'geojson',
+      data,
+    });
+  } catch (error) {
+    console.error(`Failed to add source "${sourceId}"`, {
+      error,
+      data,
+    });
+    throw error;
+  }
+};
+
 const locationMapContent = {
   he: {
     projectLabel: 'CORE-TLV',
@@ -602,6 +663,9 @@ const LocationMap = ({ language = 'he' }) => {
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.dragRotate.disable();
       map.touchZoomRotate.disableRotation();
+      map.on('error', (event) => {
+        console.error('Location map error', event?.error || event);
+      });
 
       map.once('load', async () => {
         const layers = map.getStyle()?.layers || [];
@@ -618,53 +682,48 @@ const LocationMap = ({ language = 'he' }) => {
           )
         );
 
-        map.addSource('project-location', {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {
-                  title: 'CORE-TLV',
-                },
-                geometry: {
-                  type: 'Point',
-                  coordinates: LOCATION_CENTER,
-                },
-              },
-            ],
-          },
-        });
-
-        map.addSource('project-distance-rings', {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: [
-              createDistanceCircle(LOCATION_CENTER, 500),
-              createDistanceCircle(LOCATION_CENTER, 1000),
-            ],
-          },
-        });
-
-        map.addSource('nearby-pois', {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: visiblePois.map((poi) => ({
+        const projectLocationData = {
+          type: 'FeatureCollection',
+          features: [
+            {
               type: 'Feature',
               properties: {
-                name: poi.name[language] || poi.name.he,
-                icon: `poi-${poi.icon}`,
+                title: 'CORE-TLV',
               },
               geometry: {
                 type: 'Point',
-                coordinates: poi.coordinates,
+                coordinates: LOCATION_CENTER,
               },
-            })),
-          },
-        });
+            },
+          ],
+        };
+
+        const projectDistanceRingsData = {
+          type: 'FeatureCollection',
+          features: [
+            createDistanceCircle(LOCATION_CENTER, 500),
+            createDistanceCircle(LOCATION_CENTER, 1000),
+          ],
+        };
+
+        const nearbyPoisData = {
+          type: 'FeatureCollection',
+          features: visiblePois.map((poi) => ({
+            type: 'Feature',
+            properties: {
+              name: poi.name[language] || poi.name.he,
+              icon: `poi-${poi.icon}`,
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: poi.coordinates,
+            },
+          })),
+        };
+
+        addGeoJsonSource(map, 'project-location', projectLocationData);
+        addGeoJsonSource(map, 'project-distance-rings', projectDistanceRingsData);
+        addGeoJsonSource(map, 'nearby-pois', nearbyPoisData);
 
         map.addLayer({
           id: 'project-distance-rings',
