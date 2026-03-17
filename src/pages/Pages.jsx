@@ -403,6 +403,49 @@ const LOCATION_POIS = [
   },
 ];
 
+const LOCATION_STREETS = [
+  {
+    name: {
+      he: 'שדרות שאול המלך',
+      en: 'Shaul HaMelech Blvd',
+    },
+    coordinates: [34.7905, 32.0776],
+    rotation: -22,
+  },
+  {
+    name: {
+      he: 'מנחם בגין',
+      en: 'Menachem Begin',
+    },
+    coordinates: [34.7902, 32.0727],
+    rotation: 0,
+  },
+  {
+    name: {
+      he: 'אליעזר קפלן',
+      en: 'Eliezer Kaplan',
+    },
+    coordinates: [34.7842, 32.0735],
+    rotation: 0,
+  },
+  {
+    name: {
+      he: 'דיזנגוף',
+      en: 'Dizengoff',
+    },
+    coordinates: [34.7746, 32.0765],
+    rotation: 72,
+  },
+  {
+    name: {
+      he: 'נתיבי איילון',
+      en: 'Netivei Ayalon',
+    },
+    coordinates: [34.7977, 32.0815],
+    rotation: 0,
+  },
+];
+
 const createPoiSvg = (iconType) => {
   const common = `
     <rect x="4" y="4" width="32" height="32" rx="16" fill="#fbf6ef" stroke="#8d7154" stroke-width="1.6" />
@@ -499,9 +542,7 @@ const createDistanceCircle = (center, radiusInMeters, steps = 96) => {
 
   return {
     type: 'Feature',
-    properties: {
-      radius: radiusInMeters,
-    },
+    properties: {},
     geometry: {
       type: 'LineString',
       coordinates,
@@ -529,6 +570,7 @@ const LocationMap = ({ language = 'he' }) => {
   const mapInstanceRef = useRef(null);
   const poiPopupsRef = useRef([]);
   const distancePopupsRef = useRef([]);
+  const streetPopupsRef = useRef([]);
   const content = locationMapContent[language] || locationMapContent.he;
 
   useEffect(() => {
@@ -613,7 +655,7 @@ const LocationMap = ({ language = 'he' }) => {
             features: visiblePois.map((poi) => ({
               type: 'Feature',
               properties: {
-                name: poi.name,
+                name: poi.name[language] || poi.name.he,
                 icon: `poi-${poi.icon}`,
               },
               geometry: {
@@ -701,6 +743,23 @@ const LocationMap = ({ language = 'he' }) => {
           )
           .addTo(map);
 
+        streetPopupsRef.current = LOCATION_STREETS.map((street) =>
+          new maplibregl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            closeOnMove: false,
+            focusAfterOpen: false,
+            offset: [0, 0],
+            anchor: 'center',
+            className: 'location-map-street-popup',
+          })
+            .setLngLat(street.coordinates)
+            .setHTML(
+              `<div class="location-map-street-label" dir="${content.dir}" style="--street-rotation:${street.rotation}deg;">${street.name[language] || street.name.he}</div>`
+            )
+            .addTo(map)
+        );
+
         poiPopupsRef.current = visiblePois.map((poi) =>
           new maplibregl.Popup({
             closeButton: false,
@@ -736,6 +795,8 @@ const LocationMap = ({ language = 'he' }) => {
       poiPopupsRef.current = [];
       distancePopupsRef.current.forEach((popup) => popup.remove());
       distancePopupsRef.current = [];
+      streetPopupsRef.current.forEach((popup) => popup.remove());
+      streetPopupsRef.current = [];
       mapInstanceRef.current = null;
     };
   }, [content.dir, content.distance1000, content.distance500, content.projectLabel, language]);

@@ -96,6 +96,10 @@
   z-index: 1;
 }
 
+.location-map-canvas .location-map-street-popup {
+  z-index: 1;
+}
+
 .location-map-canvas .maplibregl-popup-content {
   padding: 0;
   border-radius: 999px;
@@ -137,6 +141,18 @@
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
+}
+
+.location-map-street-label {
+  color: rgba(123, 110, 91, 0.82);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(248, 243, 236, 0.9);
+  transform: rotate(var(--street-rotation, 0deg));
+  transform-origin: center;
 }
 
 
@@ -318,6 +334,10 @@
   .location-map-distance-label {
     padding: 2px 6px;
     font-size: 0.66rem;
+  }
+
+  .location-map-street-label {
+    font-size: 0.72rem;
   }
 
   .specs-page {
