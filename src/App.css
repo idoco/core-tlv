@@ -53,6 +53,7 @@ body {
 
 main {
   flex: 1 0 auto;
+  background: #efe9e1;
 }
 
 /* Buttons */

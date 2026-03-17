@@ -285,11 +285,238 @@ const ArchitecturePage = ({ language = 'he' }) => {
 };
 
 const LOCATION_CENTER = [34.791929, 32.077509];
+const LOCATION_DEFAULT_VIEW = [34.7899, 32.0792];
 const LOCATION_STYLE = 'https://tiles.openfreemap.org/styles/positron';
+const LOCATION_POIS = [
+  {
+    name: {
+      he: 'כיכר המדינה',
+      en: 'Kikar HaMedina',
+    },
+    icon: 'district',
+    coordinates: [34.78978, 32.08676],
+  },
+  {
+    name: {
+      he: 'תחנת סבידור / מרכז ארלוזורוב',
+      en: 'Savidor Station / Arlozorov Center',
+    },
+    icon: 'train',
+    coordinates: [34.79725, 32.08374],
+  },
+  {
+    name: {
+      he: 'בית חולים איכילוב',
+      en: 'Ichilov Hospital',
+    },
+    icon: 'hospital',
+    coordinates: [34.79018, 32.08033],
+  },
+  {
+    name: {
+      he: 'כיכר רבין',
+      en: 'Rabin Square',
+    },
+    icon: 'landmark',
+    coordinates: [34.78059, 32.08061],
+  },
+  {
+    name: {
+      he: 'מוזיאון תל אביב',
+      en: 'Tel Aviv Museum',
+    },
+    icon: 'museum',
+    coordinates: [34.78687, 32.07768],
+    chipAnchor: 'top',
+    chipOffset: [0, 18],
+  },
+  {
+    name: {
+      he: 'הקריה המשפטית',
+      en: 'Judicial District',
+    },
+    icon: 'civic',
+    coordinates: [34.78775, 32.07779],
+  },
+  {
+    name: {
+      he: 'תחנת רכבת קלה',
+      en: 'Light Rail Station',
+    },
+    icon: 'transit',
+    coordinates: [34.79216, 32.07692],
+    chipAnchor: 'left',
+    chipOffset: [18, 0],
+  },
+  {
+    name: {
+      he: 'תיאטרון הקאמרי',
+      en: 'Cameri Theatre',
+    },
+    icon: 'theater',
+    coordinates: [34.78489, 32.07407],
+  },
+  {
+    name: {
+      he: 'תיאטרון הבימה',
+      en: 'Habima Theatre',
+    },
+    icon: 'theater',
+    coordinates: [34.77902, 32.07281],
+  },
+  {
+    name: {
+      he: 'קניון TLV',
+      en: 'TLV Mall',
+    },
+    icon: 'shopping',
+    coordinates: [34.78411, 32.06864],
+  },
+  {
+    name: {
+      he: 'מתחם שרונה',
+      en: 'Sarona Complex',
+    },
+    icon: 'district',
+    coordinates: [34.78715, 32.07226],
+  },
+  {
+    name: {
+      he: 'מגדלי עזריאלי',
+      en: 'Azrieli Towers',
+    },
+    icon: 'tower',
+    coordinates: [34.79186, 32.07473],
+  },
+];
 
-const LocationMap = () => {
+const createPoiSvg = (iconType) => {
+  const common = `
+    <rect x="4" y="4" width="32" height="32" rx="16" fill="#fbf6ef" stroke="#8d7154" stroke-width="1.6" />
+  `;
+
+  const icons = {
+    museum: `
+      ${common}
+      <path d="M12 18L20 13L28 18" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M14 18V26M20 18V26M26 18V26M12 26H28" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round"/>
+    `,
+    train: `
+      ${common}
+      <rect x="12.5" y="11.5" width="15" height="13" rx="3" fill="none" stroke="#8d7154" stroke-width="1.8"/>
+      <path d="M16 15H17M23 15H24M16 28L18.5 24.8M24 28L21.5 24.8M15 20H25" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round"/>
+    `,
+    hospital: `
+      ${common}
+      <path d="M20 13V27M13 20H27" fill="none" stroke="#8d7154" stroke-width="3" stroke-linecap="round"/>
+    `,
+    landmark: `
+      ${common}
+      <circle cx="20" cy="20" r="7" fill="none" stroke="#8d7154" stroke-width="1.8"/>
+      <path d="M20 13V27M13 20H27" fill="none" stroke="#8d7154" stroke-width="1.4" stroke-linecap="round"/>
+    `,
+    civic: `
+      ${common}
+      <path d="M12 17L20 12L28 17" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M14 17V26M20 17V26M26 17V26M12 26H28" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M16 10H24" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round"/>
+    `,
+    transit: `
+      ${common}
+      <path d="M14 13H26L24.5 24H15.5L14 13Z" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M17 16H23M17 20H23M17 27L18.8 24.3M23 27L21.2 24.3" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round"/>
+    `,
+    theater: `
+      ${common}
+      <path d="M13 14C15 12.5 17.5 12 20 12C22.5 12 25 12.5 27 14V23C25 24.5 22.5 25 20 25C17.5 25 15 24.5 13 23V14Z" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M16.5 17.5H16.6M23.4 17.5H23.5M16.8 21C17.8 19.8 19 19.2 20 19.2C21 19.2 22.2 19.8 23.2 21" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round"/>
+    `,
+    shopping: `
+      ${common}
+      <path d="M14 17H26L24.8 27H15.2L14 17Z" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M17 17V15.5C17 13.6 18.3 12 20 12C21.7 12 23 13.6 23 15.5V17" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round"/>
+    `,
+    district: `
+      ${common}
+      <path d="M12.5 25.5L16.2 14.5L20 20L23.8 14.5L27.5 25.5" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    `,
+    tower: `
+      ${common}
+      <path d="M16 27V15L20 12L24 15V27" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M18 18H22M18 22H22" fill="none" stroke="#8d7154" stroke-width="1.8" stroke-linecap="round"/>
+    `,
+  };
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+      ${icons[iconType] || icons.landmark}
+    </svg>
+  `;
+};
+
+const addMapImage = (map, name, svgMarkup) =>
+  new Promise((resolve, reject) => {
+    const image = new Image(40, 40);
+    image.onload = () => {
+      if (!map.hasImage(name)) {
+        map.addImage(name, image, { pixelRatio: 2 });
+      }
+      resolve();
+    };
+    image.onerror = reject;
+    image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkup)}`;
+  });
+
+const createDistanceCircle = (center, radiusInMeters, steps = 96) => {
+  const [lng, lat] = center;
+  const earthRadius = 6371000;
+  const latRadians = (lat * Math.PI) / 180;
+
+  const coordinates = Array.from({ length: steps + 1 }, (_, index) => {
+    const angle = (index / steps) * Math.PI * 2;
+    const dx = radiusInMeters * Math.cos(angle);
+    const dy = radiusInMeters * Math.sin(angle);
+
+    const pointLat = lat + (dy / earthRadius) * (180 / Math.PI);
+    const pointLng =
+      lng + (dx / (earthRadius * Math.cos(latRadians))) * (180 / Math.PI);
+
+    return [pointLng, pointLat];
+  });
+
+  return {
+    type: 'Feature',
+    properties: {
+      radius: radiusInMeters,
+    },
+    geometry: {
+      type: 'Polygon',
+      coordinates: [coordinates],
+    },
+  };
+};
+
+const locationMapContent = {
+  he: {
+    projectLabel: 'CORE-TLV',
+    distance500: '500 מטר',
+    distance1000: '1 קילומטר',
+    dir: 'rtl',
+  },
+  en: {
+    projectLabel: 'CORE-TLV',
+    distance500: '500 m',
+    distance1000: '1 km',
+    dir: 'ltr',
+  },
+};
+
+const LocationMap = ({ language = 'he' }) => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
+  const poiPopupsRef = useRef([]);
+  const distancePopupsRef = useRef([]);
+  const content = locationMapContent[language] || locationMapContent.he;
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) {
@@ -308,16 +535,18 @@ const LocationMap = () => {
       const map = new maplibregl.Map({
         container: mapRef.current,
         style: LOCATION_STYLE,
-        center: LOCATION_CENTER,
-        zoom: 14.3,
+        center: LOCATION_DEFAULT_VIEW,
+        zoom: 14.2,
         pitch: 0,
         bearing: 0,
         attributionControl: false,
       });
 
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      map.dragRotate.disable();
+      map.touchZoomRotate.disableRotation();
 
-      map.once('load', () => {
+      map.once('load', async () => {
         const layers = map.getStyle()?.layers || [];
 
         layers.forEach((layer) => {
@@ -325,6 +554,12 @@ const LocationMap = () => {
             map.setLayoutProperty(layer.id, 'visibility', 'none');
           }
         });
+
+        await Promise.all(
+          [...new Set(LOCATION_POIS.map((poi) => poi.icon))].map((iconName) =>
+            addMapImage(map, `poi-${iconName}`, createPoiSvg(iconName))
+          )
+        );
 
         map.addSource('project-location', {
           type: 'geojson',
@@ -345,15 +580,79 @@ const LocationMap = () => {
           },
         });
 
+        map.addSource('project-distance-rings', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              createDistanceCircle(LOCATION_CENTER, 500),
+              createDistanceCircle(LOCATION_CENTER, 1000),
+            ],
+          },
+        });
+
+        map.addSource('nearby-pois', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: LOCATION_POIS.map((poi) => ({
+              type: 'Feature',
+              properties: {
+                name: poi.name,
+                icon: `poi-${poi.icon}`,
+              },
+              geometry: {
+                type: 'Point',
+                coordinates: poi.coordinates,
+              },
+            })),
+          },
+        });
+
         map.addLayer({
-          id: 'project-location-ring',
-          type: 'circle',
-          source: 'project-location',
+          id: 'project-distance-rings',
+          type: 'line',
+          source: 'project-distance-rings',
           paint: {
-            'circle-radius': 42,
-            'circle-color': 'rgba(181, 95, 60, 0)',
-            'circle-stroke-color': 'rgba(181, 95, 60, 0.26)',
-            'circle-stroke-width': 2,
+            'line-color': 'rgba(181, 95, 60, 0.34)',
+            'line-width': 3,
+            'line-dasharray': [1.4, 2],
+          },
+        });
+
+        distancePopupsRef.current = [
+          {
+            label: content.distance500,
+            coordinates: [LOCATION_CENTER[0], LOCATION_CENTER[1] + 0.0045],
+          },
+          {
+            label: content.distance1000,
+            coordinates: [LOCATION_CENTER[0], LOCATION_CENTER[1] + 0.009],
+          },
+        ].map((item) =>
+          new maplibregl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            closeOnMove: false,
+            focusAfterOpen: false,
+            offset: [0, 0],
+            anchor: 'center',
+            className: 'location-map-distance-popup',
+          })
+            .setLngLat(item.coordinates)
+            .setHTML(`<div class="location-map-distance-label" dir="${content.dir}">${item.label}</div>`)
+            .addTo(map)
+        );
+
+        map.addLayer({
+          id: 'nearby-pois-icons',
+          type: 'symbol',
+          source: 'nearby-pois',
+          layout: {
+            'icon-image': ['get', 'icon'],
+            'icon-size': 0.92,
+            'icon-allow-overlap': true,
+            'icon-ignore-placement': true,
           },
         });
 
@@ -369,27 +668,38 @@ const LocationMap = () => {
           },
         });
 
-        map.addLayer({
-          id: 'project-location-label',
-          type: 'symbol',
-          source: 'project-location',
-          layout: {
-            'text-field': ['get', 'title'],
-            'text-font': ['Open Sans Semibold'],
-            'text-size': 13,
-            'text-letter-spacing': 0.18,
-            'text-transform': 'uppercase',
-            'text-offset': [0, -2.6],
-            'text-anchor': 'bottom',
-            'text-allow-overlap': true,
-          },
-          paint: {
-            'text-color': '#111111',
-            'text-halo-color': 'rgba(255, 251, 246, 0.96)',
-            'text-halo-width': 6,
-            'text-halo-blur': 0.6,
-          },
-        });
+        new maplibregl.Popup({
+          closeButton: false,
+          closeOnClick: false,
+          closeOnMove: false,
+          focusAfterOpen: false,
+          offset: [0, -28],
+          anchor: 'bottom',
+          className: 'location-map-popup location-map-popup-project',
+        })
+          .setLngLat(LOCATION_CENTER)
+          .setHTML(
+            `<div class="location-map-popup-inner location-map-popup-inner-project" dir="${content.dir}">${content.projectLabel}</div>`
+          )
+          .addTo(map);
+
+        poiPopupsRef.current = LOCATION_POIS.map((poi) =>
+          new maplibregl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            closeOnMove: false,
+            focusAfterOpen: false,
+            offset: poi.chipOffset || [0, -22],
+            anchor: poi.chipAnchor || 'bottom',
+            className: 'location-map-popup',
+          })
+            .setLngLat(poi.coordinates)
+            .setHTML(
+              `<div class="location-map-popup-inner" dir="${content.dir}">${poi.name[language] || poi.name.he}</div>`
+            )
+            .addTo(map)
+        );
+
       });
 
       mapInstanceRef.current = map;
@@ -404,9 +714,13 @@ const LocationMap = () => {
         mapInstanceRef.current.remove();
       }
 
+      poiPopupsRef.current.forEach((popup) => popup.remove());
+      poiPopupsRef.current = [];
+      distancePopupsRef.current.forEach((popup) => popup.remove());
+      distancePopupsRef.current = [];
       mapInstanceRef.current = null;
     };
-  }, []);
+  }, [content.dir, content.distance1000, content.distance500, content.projectLabel, language]);
 
   return <div ref={mapRef} className="location-map-canvas" />;
 };
@@ -418,7 +732,7 @@ const LocationPage = ({ language = 'he' }) => {
         <section className="location-map-section" aria-label="Project location map">
           <div className="location-map-shell">
             <div className="location-map-frame">
-              <LocationMap />
+              <LocationMap language={language} />
             </div>
           </div>
         </section>

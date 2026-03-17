@@ -1,12 +1,12 @@
 .specs-page {
-  background: #ebebeb;
+  background: #efe9e1;
   min-height: 60vh;
   padding: 56px 0 0;
   color: #111;
 }
 
 .architecture-page {
-  background: #ebebeb;
+  background: #efe9e1;
   min-height: 60vh;
   padding: 64px 0 40px;
   color: #111;
@@ -83,6 +83,62 @@
   width: 36px;
   height: 36px;
 }
+
+.location-map-canvas .maplibregl-popup {
+  z-index: 2;
+}
+
+.location-map-canvas .location-map-popup-project {
+  z-index: 4;
+}
+
+.location-map-canvas .location-map-distance-popup {
+  z-index: 1;
+}
+
+.location-map-canvas .maplibregl-popup-content {
+  padding: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.location-map-canvas .maplibregl-popup-tip {
+  display: none;
+}
+
+.location-map-popup-inner {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 251, 246, 0.96);
+  border: 1px solid rgba(34, 34, 34, 0.14);
+  box-shadow: 0 10px 24px rgba(55, 44, 33, 0.12);
+  color: #111;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.location-map-popup-inner-project {
+  padding: 11px 16px;
+  font-size: 1.06rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  box-shadow: 0 14px 28px rgba(55, 44, 33, 0.16);
+}
+
+.location-map-distance-label {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 251, 246, 0.82);
+  color: rgba(126, 86, 62, 1);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 
 .architecture-container {
   max-width: 1180px;
