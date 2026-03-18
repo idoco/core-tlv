@@ -288,11 +288,6 @@ const LOCATION_CENTER = [34.791929, 32.077509];
 const LOCATION_DEFAULT_VIEW = [34.7899, 32.0792];
 const LOCATION_DEFAULT_VIEW_MOBILE = [34.7908, 32.0784];
 const LOCATION_STYLE = 'https://tiles.openfreemap.org/styles/positron';
-const LOCATION_SOURCE_URLS = {
-  projectLocation: `${process.env.PUBLIC_URL}/assets/location/project-location.geojson`,
-  projectDistanceRings: `${process.env.PUBLIC_URL}/assets/location/project-distance-rings.geojson`,
-  nearbyPois: `${process.env.PUBLIC_URL}/assets/location/nearby-pois.geojson`,
-};
 const LOCATION_POIS = [
   {
     name: {
@@ -528,29 +523,32 @@ const addMapImage = (map, name, svgMarkup) =>
     image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkup)}`;
   });
 
-const addGeoJsonSource = (map, sourceId, data) => {
-  console.info('Location map addSource:start', {
-    sourceId,
-    dataType: typeof data,
-    data,
+const createDistanceCircle = (center, radiusInMeters, steps = 96) => {
+  const [lng, lat] = center;
+  const earthRadius = 6371000;
+  const latRadians = (lat * Math.PI) / 180;
+
+  const coordinates = Array.from({ length: steps + 1 }, (_, index) => {
+    const angle = (index / steps) * Math.PI * 2;
+    const dx = radiusInMeters * Math.cos(angle);
+    const dy = radiusInMeters * Math.sin(angle);
+
+    const pointLat = lat + (dy / earthRadius) * (180 / Math.PI);
+    const pointLng =
+      lng + (dx / (earthRadius * Math.cos(latRadians))) * (180 / Math.PI);
+
+    return [pointLng, pointLat];
   });
 
-  try {
-    map.addSource(sourceId, {
-      type: 'geojson',
-      data,
-    });
-    console.info('Location map addSource:success', { sourceId });
-  } catch (error) {
-    console.error(`Failed to add source "${sourceId}"`, {
-      error,
-      data,
-    });
-    throw error;
-  }
+  return {
+    type: 'Feature',
+    properties: {},
+    geometry: {
+      type: 'LineString',
+      coordinates,
+    },
+  };
 };
-
-const LOCATION_DEBUG_BUILD = 'debug-map-v4-url-geojson-csp-worker-api';
 
 const locationMapContent = {
   he: {
@@ -593,13 +591,6 @@ const LocationMap = ({ language = 'he' }) => {
 
       maplibregl.setWorkerUrl(`${process.env.PUBLIC_URL}/maplibre-gl-csp-worker.js`);
 
-      console.info('Location map init', {
-        debugBuild: LOCATION_DEBUG_BUILD,
-        maplibreVersion: maplibregl.getVersion(),
-        sourceMode: 'url-geojson',
-        language,
-      });
-
       const map = new maplibregl.Map({
         container: mapRef.current,
         style: LOCATION_STYLE,
@@ -613,14 +604,6 @@ const LocationMap = ({ language = 'he' }) => {
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.dragRotate.disable();
       map.touchZoomRotate.disableRotation();
-      map.on('error', (event) => {
-        console.error('Location map error', {
-          debugBuild: LOCATION_DEBUG_BUILD,
-          maplibreVersion: maplibregl.getVersion(),
-          event,
-          error: event?.error || event,
-        });
-      });
 
       map.once('load', async () => {
         const layers = map.getStyle()?.layers || [];
@@ -637,9 +620,53 @@ const LocationMap = ({ language = 'he' }) => {
           )
         );
 
-        addGeoJsonSource(map, 'project-location', LOCATION_SOURCE_URLS.projectLocation);
-        addGeoJsonSource(map, 'project-distance-rings', LOCATION_SOURCE_URLS.projectDistanceRings);
-        addGeoJsonSource(map, 'nearby-pois', LOCATION_SOURCE_URLS.nearbyPois);
+        map.addSource('project-location', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                properties: {
+                  title: 'CORE-TLV',
+                },
+                geometry: {
+                  type: 'Point',
+                  coordinates: LOCATION_CENTER,
+                },
+              },
+            ],
+          },
+        });
+
+        map.addSource('project-distance-rings', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              createDistanceCircle(LOCATION_CENTER, 500),
+              createDistanceCircle(LOCATION_CENTER, 1000),
+            ],
+          },
+        });
+
+        map.addSource('nearby-pois', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: visiblePois.map((poi) => ({
+              type: 'Feature',
+              properties: {
+                name: poi.name[language] || poi.name.he,
+                icon: `poi-${poi.icon}`,
+              },
+              geometry: {
+                type: 'Point',
+                coordinates: poi.coordinates,
+              },
+            })),
+          },
+        });
 
         map.addLayer({
           id: 'project-distance-rings',
