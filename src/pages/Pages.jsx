@@ -288,6 +288,11 @@ const LOCATION_CENTER = [34.791929, 32.077509];
 const LOCATION_DEFAULT_VIEW = [34.7899, 32.0792];
 const LOCATION_DEFAULT_VIEW_MOBILE = [34.7908, 32.0784];
 const LOCATION_STYLE = 'https://tiles.openfreemap.org/styles/positron';
+const LOCATION_SOURCE_URLS = {
+  projectLocation: `${process.env.PUBLIC_URL}/assets/location/project-location.geojson`,
+  projectDistanceRings: `${process.env.PUBLIC_URL}/assets/location/project-distance-rings.geojson`,
+  nearbyPois: `${process.env.PUBLIC_URL}/assets/location/nearby-pois.geojson`,
+};
 const LOCATION_POIS = [
   {
     name: {
@@ -523,88 +528,11 @@ const addMapImage = (map, name, svgMarkup) =>
     image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkup)}`;
   });
 
-const createDistanceCircle = (center, radiusInMeters, steps = 96) => {
-  const [lng, lat] = center;
-  const earthRadius = 6371000;
-  const latRadians = (lat * Math.PI) / 180;
-
-  const coordinates = Array.from({ length: steps + 1 }, (_, index) => {
-    const angle = (index / steps) * Math.PI * 2;
-    const dx = radiusInMeters * Math.cos(angle);
-    const dy = radiusInMeters * Math.sin(angle);
-
-    const pointLat = lat + (dy / earthRadius) * (180 / Math.PI);
-    const pointLng =
-      lng + (dx / (earthRadius * Math.cos(latRadians))) * (180 / Math.PI);
-
-    return [pointLng, pointLat];
-  });
-
-  return {
-    type: 'Feature',
-    properties: {},
-    geometry: {
-      type: 'LineString',
-      coordinates,
-    },
-  };
-};
-
-const isFiniteCoordinate = (value) => typeof value === 'number' && Number.isFinite(value);
-
-const validateLngLat = (coordinates, label) => {
-  if (!Array.isArray(coordinates) || coordinates.length !== 2) {
-    throw new Error(`${label}: expected [lng, lat], received ${JSON.stringify(coordinates)}`);
-  }
-
-  const [lng, lat] = coordinates;
-
-  if (!isFiniteCoordinate(lng) || !isFiniteCoordinate(lat)) {
-    throw new Error(`${label}: coordinates must be finite numbers, received ${JSON.stringify(coordinates)}`);
-  }
-};
-
-const validateFeatureCoordinates = (feature, label) => {
-  if (!feature?.geometry) {
-    throw new Error(`${label}: missing geometry`);
-  }
-
-  if (feature.geometry.type === 'Point') {
-    validateLngLat(feature.geometry.coordinates, `${label} point`);
-    return;
-  }
-
-  if (feature.geometry.type === 'LineString') {
-    if (!Array.isArray(feature.geometry.coordinates) || feature.geometry.coordinates.length < 2) {
-      throw new Error(`${label}: line requires at least two coordinates`);
-    }
-
-    feature.geometry.coordinates.forEach((coordinates, index) => {
-      validateLngLat(coordinates, `${label} point ${index}`);
-    });
-    return;
-  }
-
-  throw new Error(`${label}: unsupported geometry type ${feature.geometry.type}`);
-};
-
 const addGeoJsonSource = (map, sourceId, data) => {
-  if (data?.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
-    throw new Error(`${sourceId}: invalid GeoJSON FeatureCollection`);
-  }
-
-  data.features.forEach((feature, index) => {
-    validateFeatureCoordinates(feature, `${sourceId} feature ${index}`);
-  });
-
   console.info('Location map addSource:start', {
     sourceId,
-    featureCount: data.features.length,
-    geometryTypes: data.features.map((feature) => feature?.geometry?.type || 'missing'),
-    firstCoordinate:
-      data.features[0]?.geometry?.type === 'Point'
-        ? data.features[0].geometry.coordinates
-        : data.features[0]?.geometry?.coordinates?.[0],
+    dataType: typeof data,
+    data,
   });
 
   try {
@@ -622,7 +550,7 @@ const addGeoJsonSource = (map, sourceId, data) => {
   }
 };
 
-const LOCATION_DEBUG_BUILD = 'debug-map-v1-266614b';
+const LOCATION_DEBUG_BUILD = 'debug-map-v2-url-geojson';
 
 const locationMapContent = {
   he: {
@@ -666,7 +594,7 @@ const LocationMap = ({ language = 'he' }) => {
       console.info('Location map init', {
         debugBuild: LOCATION_DEBUG_BUILD,
         maplibreVersion: maplibregl.version,
-        sourceMode: 'inline-geojson',
+        sourceMode: 'url-geojson',
         language,
       });
 
@@ -707,48 +635,9 @@ const LocationMap = ({ language = 'he' }) => {
           )
         );
 
-        const projectLocationData = {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              properties: {
-                title: 'CORE-TLV',
-              },
-              geometry: {
-                type: 'Point',
-                coordinates: LOCATION_CENTER,
-              },
-            },
-          ],
-        };
-
-        const projectDistanceRingsData = {
-          type: 'FeatureCollection',
-          features: [
-            createDistanceCircle(LOCATION_CENTER, 500),
-            createDistanceCircle(LOCATION_CENTER, 1000),
-          ],
-        };
-
-        const nearbyPoisData = {
-          type: 'FeatureCollection',
-          features: visiblePois.map((poi) => ({
-            type: 'Feature',
-            properties: {
-              name: poi.name[language] || poi.name.he,
-              icon: `poi-${poi.icon}`,
-            },
-            geometry: {
-              type: 'Point',
-              coordinates: poi.coordinates,
-            },
-          })),
-        };
-
-        addGeoJsonSource(map, 'project-location', projectLocationData);
-        addGeoJsonSource(map, 'project-distance-rings', projectDistanceRingsData);
-        addGeoJsonSource(map, 'nearby-pois', nearbyPoisData);
+        addGeoJsonSource(map, 'project-location', LOCATION_SOURCE_URLS.projectLocation);
+        addGeoJsonSource(map, 'project-distance-rings', LOCATION_SOURCE_URLS.projectDistanceRings);
+        addGeoJsonSource(map, 'nearby-pois', LOCATION_SOURCE_URLS.nearbyPois);
 
         map.addLayer({
           id: 'project-distance-rings',
