@@ -597,11 +597,22 @@ const addGeoJsonSource = (map, sourceId, data) => {
     validateFeatureCoordinates(feature, `${sourceId} feature ${index}`);
   });
 
+  console.info('Location map addSource:start', {
+    sourceId,
+    featureCount: data.features.length,
+    geometryTypes: data.features.map((feature) => feature?.geometry?.type || 'missing'),
+    firstCoordinate:
+      data.features[0]?.geometry?.type === 'Point'
+        ? data.features[0].geometry.coordinates
+        : data.features[0]?.geometry?.coordinates?.[0],
+  });
+
   try {
     map.addSource(sourceId, {
       type: 'geojson',
       data,
     });
+    console.info('Location map addSource:success', { sourceId });
   } catch (error) {
     console.error(`Failed to add source "${sourceId}"`, {
       error,
@@ -610,6 +621,8 @@ const addGeoJsonSource = (map, sourceId, data) => {
     throw error;
   }
 };
+
+const LOCATION_DEBUG_BUILD = 'debug-map-v1-266614b';
 
 const locationMapContent = {
   he: {
@@ -650,6 +663,13 @@ const LocationMap = ({ language = 'he' }) => {
         return;
       }
 
+      console.info('Location map init', {
+        debugBuild: LOCATION_DEBUG_BUILD,
+        maplibreVersion: maplibregl.version,
+        sourceMode: 'inline-geojson',
+        language,
+      });
+
       const map = new maplibregl.Map({
         container: mapRef.current,
         style: LOCATION_STYLE,
@@ -664,7 +684,12 @@ const LocationMap = ({ language = 'he' }) => {
       map.dragRotate.disable();
       map.touchZoomRotate.disableRotation();
       map.on('error', (event) => {
-        console.error('Location map error', event?.error || event);
+        console.error('Location map error', {
+          debugBuild: LOCATION_DEBUG_BUILD,
+          maplibreVersion: maplibregl.version,
+          event,
+          error: event?.error || event,
+        });
       });
 
       map.once('load', async () => {
