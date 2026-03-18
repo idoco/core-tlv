@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/core-tlv/static/css/main.6eefabf4.css",
-    "main.js": "/core-tlv/static/js/main.f4762fcb.js",
+    "main.js": "/core-tlv/static/js/main.e9ff1e2d.js",
     "static/js/66.4e3b7148.chunk.js": "/core-tlv/static/js/66.4e3b7148.chunk.js",
     "index.html": "/core-tlv/index.html",
     "main.6eefabf4.css.map": "/core-tlv/static/css/main.6eefabf4.css.map",
-    "main.f4762fcb.js.map": "/core-tlv/static/js/main.f4762fcb.js.map",
+    "main.e9ff1e2d.js.map": "/core-tlv/static/js/main.e9ff1e2d.js.map",
     "66.4e3b7148.chunk.js.map": "/core-tlv/static/js/66.4e3b7148.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6eefabf4.css",
-    "static/js/main.f4762fcb.js"
+    "static/js/main.e9ff1e2d.js"
   ]
 }
