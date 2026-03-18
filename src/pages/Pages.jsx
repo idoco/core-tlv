@@ -611,6 +611,13 @@ const addGeoJsonSource = (map, sourceId, data) => {
   }
 };
 
+const createGeoJsonBlobUrl = (data) =>
+  URL.createObjectURL(
+    new Blob([JSON.stringify(data)], {
+      type: 'application/geo+json',
+    })
+  );
+
 const locationMapContent = {
   he: {
     projectLabel: 'CORE-TLV',
@@ -632,6 +639,7 @@ const LocationMap = ({ language = 'he' }) => {
   const poiPopupsRef = useRef([]);
   const distancePopupsRef = useRef([]);
   const streetPopupsRef = useRef([]);
+  const geoJsonBlobUrlsRef = useRef([]);
   const content = locationMapContent[language] || locationMapContent.he;
 
   useEffect(() => {
@@ -721,9 +729,15 @@ const LocationMap = ({ language = 'he' }) => {
           })),
         };
 
-        addGeoJsonSource(map, 'project-location', projectLocationData);
-        addGeoJsonSource(map, 'project-distance-rings', projectDistanceRingsData);
-        addGeoJsonSource(map, 'nearby-pois', nearbyPoisData);
+        geoJsonBlobUrlsRef.current = [
+          createGeoJsonBlobUrl(projectLocationData),
+          createGeoJsonBlobUrl(projectDistanceRingsData),
+          createGeoJsonBlobUrl(nearbyPoisData),
+        ];
+
+        addGeoJsonSource(map, 'project-location', geoJsonBlobUrlsRef.current[0]);
+        addGeoJsonSource(map, 'project-distance-rings', geoJsonBlobUrlsRef.current[1]);
+        addGeoJsonSource(map, 'nearby-pois', geoJsonBlobUrlsRef.current[2]);
 
         map.addLayer({
           id: 'project-distance-rings',
@@ -856,6 +870,8 @@ const LocationMap = ({ language = 'he' }) => {
       distancePopupsRef.current = [];
       streetPopupsRef.current.forEach((popup) => popup.remove());
       streetPopupsRef.current = [];
+      geoJsonBlobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+      geoJsonBlobUrlsRef.current = [];
       mapInstanceRef.current = null;
     };
   }, [content.dir, content.distance1000, content.distance500, content.projectLabel, language]);
