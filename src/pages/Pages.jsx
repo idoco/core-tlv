@@ -550,7 +550,7 @@ const addGeoJsonSource = (map, sourceId, data) => {
   }
 };
 
-const LOCATION_DEBUG_BUILD = 'debug-map-v3-url-geojson-csp-worker';
+const LOCATION_DEBUG_BUILD = 'debug-map-v4-url-geojson-csp-worker-api';
 
 const locationMapContent = {
   he: {
