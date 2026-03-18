@@ -585,17 +585,17 @@ const LocationMap = ({ language = 'he' }) => {
     const visiblePois = LOCATION_POIS;
 
     const initMap = async () => {
-      const { default: maplibregl } = await import('maplibre-gl');
+      const maplibregl = await import('maplibre-gl');
 
       if (isCancelled || !mapRef.current || mapInstanceRef.current) {
         return;
       }
 
-      maplibregl.workerUrl = `${process.env.PUBLIC_URL}/maplibre-gl-csp-worker.js`;
+      maplibregl.setWorkerUrl(`${process.env.PUBLIC_URL}/maplibre-gl-csp-worker.js`);
 
       console.info('Location map init', {
         debugBuild: LOCATION_DEBUG_BUILD,
-        maplibreVersion: maplibregl.version,
+        maplibreVersion: maplibregl.getVersion(),
         sourceMode: 'url-geojson',
         language,
       });
@@ -616,7 +616,7 @@ const LocationMap = ({ language = 'he' }) => {
       map.on('error', (event) => {
         console.error('Location map error', {
           debugBuild: LOCATION_DEBUG_BUILD,
-          maplibreVersion: maplibregl.version,
+          maplibreVersion: maplibregl.getVersion(),
           event,
           error: event?.error || event,
         });
