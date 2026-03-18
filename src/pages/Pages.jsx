@@ -550,7 +550,7 @@ const addGeoJsonSource = (map, sourceId, data) => {
   }
 };
 
-const LOCATION_DEBUG_BUILD = 'debug-map-v2-url-geojson';
+const LOCATION_DEBUG_BUILD = 'debug-map-v3-url-geojson-csp-worker';
 
 const locationMapContent = {
   he: {
@@ -590,6 +590,8 @@ const LocationMap = ({ language = 'he' }) => {
       if (isCancelled || !mapRef.current || mapInstanceRef.current) {
         return;
       }
+
+      maplibregl.workerUrl = `${process.env.PUBLIC_URL}/maplibre-gl-csp-worker.js`;
 
       console.info('Location map init', {
         debugBuild: LOCATION_DEBUG_BUILD,
