@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://idoco.github.io/core-tlv",
   "dependencies": {
-    "maplibre-gl": "^5.20.2",
+    "maplibre-gl": "5.19.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
