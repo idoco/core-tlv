@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Amenity placeholder</title>
+  <desc id="desc">Placeholder image used until final amenity renders are available.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f3ede5" />
+      <stop offset="100%" stop-color="#e7ddd1" />
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)" />
+  <rect x="70" y="70" width="1460" height="860" rx="28" fill="none" stroke="#cab59a" stroke-width="4" stroke-dasharray="14 14" />
+  <circle cx="220" cy="220" r="90" fill="#efe4d4" />
+  <circle cx="1380" cy="760" r="110" fill="#efe4d4" />
+  <text x="800" y="440" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="80" font-weight="700" fill="#2a2623" letter-spacing="4">PLACEHOLDER IMAGE</text>
+  <text x="800" y="530" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#6f6559" letter-spacing="8">RENDER COMING SOON</text>
+</svg>
