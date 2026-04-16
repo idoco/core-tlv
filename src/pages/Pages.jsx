@@ -284,6 +284,175 @@ const ArchitecturePage = ({ language = 'he' }) => {
   );
 };
 
+const facilitiesContent = {
+  he: {
+    title: 'מתחמים משותפים לחיים אורבניים',
+    lead:
+      'ב־CORE TLV חוויית המגורים נמשכת הרבה מעבר לדירה עצמה. המרחבים המשותפים תוכננו כחלק בלתי נפרד מהיום־יום, עם מקומות שמאפשרים לשלב תנועה, פנאי, קצב ואיזון בתוך המתחם.',
+    supporting:
+      'חדר הכושר, חדר הספינינג, מתחם הפאדל, חדר הקולנוע, מועדון הדיירים, המשחקיה והג׳ימבורי, ובריכת האינפיניטי עם הסקיי-בר יוצרים מעטפת שלמה לדיירים, כזו שמאפשרת להתחיל את הבוקר באימון, לעצור לרגע של התאווררות במהלך היום ולסיים את הערב בחוויה פרטית, זמינה ומדויקת.',
+    facilities: [
+      {
+        title: 'חדר כושר',
+        text: 'חלל אימון מרווח עם ציוד מתקדם, תאורה נעימה ומבט פתוח החוצה לשגרת כושר יומיומית מלאה.',
+        image: 'gym-render.png',
+        alt: 'הדמיית חדר כושר של CORE TLV',
+      },
+      {
+        title: 'חדר ספינינג',
+        text: 'סטודיו ממוקד ואנרגטי לאימונים דינמיים בקצב גבוה, עם אווירה מדויקת שמגבירה את חוויית האימון.',
+        image: 'spinning-render.png',
+        alt: 'הדמיית חדר ספינינג של CORE TLV',
+      },
+      {
+        title: 'מתחם פאדל',
+        text: 'מרחב ספורט חברתי ועכשווי שמשלב משחק, תנועה ומפגש בתוך מעטפת אדריכלית מוארת ופתוחה.',
+        image: 'padel-render.png',
+        alt: 'הדמיית מתחם פאדל של CORE TLV',
+      },
+      {
+        title: 'מתחם בריכה',
+        text: 'אזור רגיעה והתחדשות לשחייה, מנוחה והפסקה מהעיר, עם שפה עיצובית שמרגישה כמו מועדון פרטי.',
+        image: 'pool-render.png',
+        alt: 'הדמיית מתחם בריכה של CORE TLV',
+      },
+      {
+        title: 'חדר קולנוע',
+        text: 'חלל צפייה אינטימי ומעוצב לחוויית קולנוע פרטית בתוך המתחם, לערבים שקטים או לאירוח באווירה אחרת.',
+        image: 'facility-placeholder.svg',
+        alt: 'תמונת הדמיה עתידית לחדר קולנוע של CORE TLV',
+      },
+      {
+        title: 'מועדון דיירים',
+        text: 'מרחב נעים ומזמין למפגשים, עבודה לא פורמלית ואירוח, שמרחיב את חוויית המגורים מעבר לדלת הדירה.',
+        image: 'facility-placeholder.svg',
+        alt: 'תמונת הדמיה עתידית למועדון דיירים של CORE TLV',
+      },
+      {
+        title: 'משחקיה וג׳ימבורי',
+        text: 'אזור ייעודי למשחק, תנועה וזמן משפחתי, שמייצר לילדים חוויה יומיומית בטוחה, פעילה ומהנה.',
+        image: 'facility-placeholder.svg',
+        alt: 'תמונת הדמיה עתידית למשחקיה וג׳ימבורי של CORE TLV',
+      },
+      {
+        title: 'בריכת אינפיניטי עם סקיי-בר',
+        text: 'מרחב עליון עם מים, נוף ואווירה אלגנטית, שמחבר בין שחייה, אירוח ורגעי שקיעה בגובה העיר.',
+        image: 'facility-placeholder.svg',
+        alt: 'תמונת הדמיה עתידית לבריכת אינפיניטי עם סקיי-בר של CORE TLV',
+      },
+    ],
+  },
+  en: {
+    title: 'Shared Spaces For Urban Living',
+    lead:
+      'At CORE TLV, the residential experience extends well beyond the apartment itself. The common amenities are planned as part of everyday life, creating spaces for movement, leisure, energy, and balance within the project.',
+    supporting:
+      'The gym, spinning studio, padel complex, cinema room, residents club, playroom and gymboree, and the infinity pool with sky-bar create a complete amenity layer for residents, allowing the day to begin with training, pause for a reset, and end with a private, on-site lifestyle experience.',
+    facilities: [
+      {
+        title: 'The Gym',
+        text: 'A spacious fitness room with advanced equipment, warm lighting, and an open outlook for everyday training.',
+        image: 'gym-render.png',
+        alt: 'CORE TLV gym render',
+      },
+      {
+        title: 'Spinning Studio',
+        text: 'A focused, high-energy studio for dynamic cycling sessions with an atmosphere designed to elevate the workout.',
+        image: 'spinning-render.png',
+        alt: 'CORE TLV spinning studio render',
+      },
+      {
+        title: 'Padel Complex',
+        text: 'A contemporary social-sport setting that brings movement and community together in a bright architectural environment.',
+        image: 'padel-render.png',
+        alt: 'CORE TLV padel complex render',
+      },
+      {
+        title: 'Pool Complex',
+        text: 'A relaxing resident amenity for swimming, unwinding, and stepping away from the city in a private-club atmosphere.',
+        image: 'pool-render.png',
+        alt: 'CORE TLV pool complex render',
+      },
+      {
+        title: 'Cinema Room',
+        text: 'An intimate screening space for a private cinema experience within the project, suited to quiet evenings and hosting alike.',
+        image: 'facility-placeholder.svg',
+        alt: 'Future render placeholder for the CORE TLV cinema room',
+      },
+      {
+        title: 'Residents Club',
+        text: 'A warm shared lounge for meeting, informal work, and hosting, extending daily life beyond the apartment door.',
+        image: 'facility-placeholder.svg',
+        alt: 'Future render placeholder for the CORE TLV residents club',
+      },
+      {
+        title: 'Playroom & Gymboree',
+        text: 'A dedicated zone for play, movement, and family time, designed to give children an active and enjoyable everyday setting.',
+        image: 'facility-placeholder.svg',
+        alt: 'Future render placeholder for the CORE TLV playroom and gymboree',
+      },
+      {
+        title: 'Infinity Pool With Sky-Bar',
+        text: 'An elevated leisure setting that combines water, views, and hospitality for sunset moments above the city.',
+        image: 'facility-placeholder.svg',
+        alt: 'Future render placeholder for the CORE TLV infinity pool with sky-bar',
+      },
+    ],
+  },
+};
+
+const FacilitiesPage = ({ language = 'he' }) => {
+  const content = facilitiesContent[language] || facilitiesContent.he;
+
+  return (
+    <div className="facilities-page" dir={language === 'he' ? 'rtl' : 'ltr'}>
+      <div className="container facilities-container">
+        <section className="facilities-intro-section" aria-labelledby={`facilities-title-${language}`}>
+          <div className="facilities-intro-panel">
+            <div className="facilities-intro-top">
+              <div className="facilities-intro-heading">
+                <h1 className="facilities-intro-title" id={`facilities-title-${language}`}>
+                  {content.title}
+                </h1>
+              </div>
+
+              <div className="facilities-intro-copy">
+                <p className="facilities-intro-lead">{content.lead}</p>
+                <p className="facilities-intro-supporting">{content.supporting}</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <section
+          className="facilities-showcase-section"
+          aria-label={language === 'he' ? 'גלריית המתחמים המשותפים' : 'Amenity gallery'}
+        >
+          <div className="facilities-showcase-grid">
+            {content.facilities.map((item) => (
+              <article className="facilities-showcase-card" key={item.title}>
+                <div className="facilities-showcase-copy">
+                  <h2 className="facilities-showcase-title">{item.title}</h2>
+                  <p className="facilities-showcase-text">{item.text}</p>
+                </div>
+
+                <figure className="facilities-showcase-figure">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/assets/facilities/${item.image}`}
+                    alt={item.alt}
+                    className="facilities-showcase-image"
+                  />
+                </figure>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
 const LOCATION_CENTER = [34.791929, 32.077509];
 const LOCATION_DEFAULT_VIEW = [34.7899, 32.0792];
 const LOCATION_DEFAULT_VIEW_MOBILE = [34.7908, 32.0784];
@@ -550,6 +719,73 @@ const createDistanceCircle = (center, radiusInMeters, steps = 96) => {
   };
 };
 
+const locationIntroContent = {
+  he: {
+    title: 'מיקום שמרכז סביבו את כל מה שהופך את העיר לכה מיוחדת',
+    lead:
+      'פרויקט CORE TLV כשמו כן הוא ממוקם בלב ליבה של תל אביב. במפגש שדרות שאול המלך ומנחם בגין נמצא המקום שבו העיר פועמת בעוצמתה המלאה.',
+    supporting:
+      'מיקום זה יוצר חיבור ישיר בין מוקדי התרבות, הפנאי והקולינריה הבולטים בעיר לבין מרכז העסקים הראשי של המטרופולין, הכולל מגדלי משרדים, חברות מובילות וצירי תעסוקה מרכזיים.',
+    highlights: [
+      {
+        title: 'תרבות, אומנות ואורח חיים',
+        text: 'צעדים ספורים מהמשכן לאמנויות הבמה, תיאטרון הקאמרי, בית האופרה, מוזיאון תל אביב לאמנות ובית אריאלה.',
+      },
+      {
+        title: 'הלב הממסדי והעסקי של העיר',
+        text: 'בסמוך לבתי המשפט, המרכז הרפואי איכילוב, משרדי קריית הממשלה ועיריית תל אביב.',
+      },
+      {
+        title: 'קניות, בילוי וקולינריה',
+        text: 'דקות הליכה ממתחם שרונה, מגדלי עזריאלי, קניון TLV ומידטאון.',
+      },
+      {
+        title: 'הצירים והכיכרות האייקוניים',
+        text: 'גישה מהירה לאבן גבירול, כיכר רבין, כיכר המדינה, מתחם הארבעה ושדרות רוטשילד.',
+      },
+    ],
+    transitTitle: 'נגישות תחבורתית יוצאת דופן',
+    transit: [
+      'בצמוד למתחם תחנת "שאול המלך" של הקו האדום של הרכבת הקלה, המחברת את גוש דן בין פתח תקווה, בני ברק, רמת גן, תל אביב-יפו ובת ים.',
+      'במרחק של כ-5 דקות הליכה מתחנת "השלום" של רכבת ישראל, המנגישה את כל חלקי הארץ.',
+      'גישה ישירה לנתיבי איילון ולצירי תנועה עירוניים מרכזיים.',
+      'חיבור לרשת שבילי האופניים, ההליכה והריצה העירוניים המפותחים של תל אביב.',
+    ],
+  },
+  en: {
+    title: 'A location that brings together everything that makes the city so distinctive',
+    lead:
+      'CORE TLV lives up to its name by sitting at the very heart of Tel Aviv. At the meeting point of Shaul Hamelech Boulevard and Menachem Begin Road, it places residents where the city beats at full intensity.',
+    supporting:
+      'This location creates a direct connection between Tel Aviv’s leading cultural, leisure, and culinary destinations and the metropolitan business core, with office towers, major companies, and key employment corridors all around it.',
+    highlights: [
+      {
+        title: 'Culture, Art, And Lifestyle',
+        text: 'Just steps from the Performing Arts Center, Cameri Theatre, the Opera House, Tel Aviv Museum of Art, and Beit Ariela.',
+      },
+      {
+        title: 'The Civic And Business Core',
+        text: 'Close to the courts, Ichilov Medical Center, government offices, and Tel Aviv Municipality.',
+      },
+      {
+        title: 'Retail, Dining, And Leisure',
+        text: 'A short walk from Sarona, Azrieli Towers, TLV Mall, and Midtown.',
+      },
+      {
+        title: 'Iconic Boulevards And Destinations',
+        text: 'Fast access to Ibn Gabirol, Rabin Square, Kikar Hamedina, the Haarbaa district, and Rothschild Boulevard.',
+      },
+    ],
+    transitTitle: 'Exceptional Connectivity',
+    transit: [
+      'Adjacent to the Shaul Hamelech station on the Red Line of the light rail, linking Petah Tikva, Bnei Brak, Ramat Gan, Tel Aviv-Yafo, and Bat Yam.',
+      'Around a 5-minute walk from HaShalom railway station, with convenient access to destinations across Israel.',
+      'Direct access to Ayalon Highway and major urban traffic routes.',
+      'Connected to Tel Aviv’s extensive network of bike paths, walking routes, and running trails.',
+    ],
+  },
+};
+
 const locationMapContent = {
   he: {
     projectLabel: 'CORE-TLV',
@@ -807,14 +1043,55 @@ const LocationMap = ({ language = 'he' }) => {
 };
 
 const LocationPage = ({ language = 'he' }) => {
+  const introContent = locationIntroContent[language] || locationIntroContent.he;
+
   return (
     <div className="location-page" dir={language === 'he' ? 'rtl' : 'ltr'}>
       <div className="container location-container">
+        <section className="location-intro-section" aria-labelledby={`location-intro-title-${language}`}>
+          <div className="location-intro-panel">
+            <div className="location-intro-top">
+              <div className="location-intro-heading">
+                <h1 className="location-intro-title" id={`location-intro-title-${language}`}>
+                  {introContent.title}
+                </h1>
+              </div>
+
+              <div className="location-intro-copy">
+                <p className="location-intro-lead">{introContent.lead}</p>
+                <p className="location-intro-supporting">{introContent.supporting}</p>
+              </div>
+            </div>
+
+            <div className="location-highlights-grid">
+              {introContent.highlights.map((item) => (
+                <article className="location-highlight-card" key={item.title}>
+                  <h2 className="location-highlight-title">{item.title}</h2>
+                  <p className="location-highlight-text">{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="location-map-section" aria-label="Project location map">
           <div className="location-map-shell">
             <div className="location-map-frame">
               <LocationMap language={language} />
             </div>
+          </div>
+        </section>
+
+        <section className="location-transit-section" aria-labelledby={`location-transit-title-${language}`}>
+          <div className="location-transit-panel">
+            <h2 className="location-transit-title" id={`location-transit-title-${language}`}>
+              {introContent.transitTitle}
+            </h2>
+            <ul className="location-transit-list">
+              {introContent.transit.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>
@@ -826,6 +1103,6 @@ export const Architecture = ({ language }) => <ArchitecturePage language={langua
 export const Apartments = () => <PlaceholderPage title="Apartments / דירות" />;
 export const Plans = () => <PlaceholderPage title="Apartment Plans / תוכניות דירה" />;
 export const Specifications = ({ language }) => <SpecificationsPage language={language} />;
-export const Facilities = () => <PlaceholderPage title="Common Areas / מתחמים משותפים" />;
+export const Facilities = ({ language }) => <FacilitiesPage language={language} />;
 export const Location = ({ language }) => <LocationPage language={language} />;
 export const About = () => <PlaceholderPage title="Developers / היזמים" />;
