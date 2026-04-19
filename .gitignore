@@ -28,3 +28,5 @@ yarn-error.log*
 # Archive files
 *.tar.gz
 *.zip
+
+design-assets/
