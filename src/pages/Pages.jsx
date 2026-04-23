@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './Pages.css';
 
@@ -319,25 +319,25 @@ const facilitiesContent = {
       {
         title: 'חדר קולנוע',
         text: 'חלל צפייה אינטימי ומעוצב לחוויית קולנוע פרטית בתוך המתחם, לערבים שקטים או לאירוח באווירה אחרת.',
-        image: 'facility-placeholder.svg',
+        image: 'cinema-render.png',
         alt: 'תמונת הדמיה עתידית לחדר קולנוע של CORE TLV',
       },
       {
         title: 'מועדון דיירים',
         text: 'מרחב נעים ומזמין למפגשים, עבודה לא פורמלית ואירוח, שמרחיב את חוויית המגורים מעבר לדלת הדירה.',
-        image: 'facility-placeholder.svg',
+        image: 'residents-render.png',
         alt: 'תמונת הדמיה עתידית למועדון דיירים של CORE TLV',
       },
       {
         title: 'משחקיה וג׳ימבורי',
         text: 'אזור ייעודי למשחק, תנועה וזמן משפחתי, שמייצר לילדים חוויה יומיומית בטוחה, פעילה ומהנה.',
-        image: 'facility-placeholder.svg',
+        image: 'playroom-render.png',
         alt: 'תמונת הדמיה עתידית למשחקיה וג׳ימבורי של CORE TLV',
       },
       {
         title: 'בריכת אינפיניטי עם סקיי-בר',
         text: 'מרחב עליון עם מים, נוף ואווירה אלגנטית, שמחבר בין שחייה, אירוח ורגעי שקיעה בגובה העיר.',
-        image: 'facility-placeholder.svg',
+        image: 'infinity-pool-render.png',
         alt: 'תמונת הדמיה עתידית לבריכת אינפיניטי עם סקיי-בר של CORE TLV',
       },
     ],
@@ -376,25 +376,25 @@ const facilitiesContent = {
       {
         title: 'Cinema Room',
         text: 'An intimate screening space for a private cinema experience within the project, suited to quiet evenings and hosting alike.',
-        image: 'facility-placeholder.svg',
+        image: 'cinema-render.png',
         alt: 'Future render placeholder for the CORE TLV cinema room',
       },
       {
         title: 'Residents Club',
         text: 'A warm shared lounge for meeting, informal work, and hosting, extending daily life beyond the apartment door.',
-        image: 'facility-placeholder.svg',
+        image: 'residents-render.png',
         alt: 'Future render placeholder for the CORE TLV residents club',
       },
       {
         title: 'Playroom & Gymboree',
         text: 'A dedicated zone for play, movement, and family time, designed to give children an active and enjoyable everyday setting.',
-        image: 'facility-placeholder.svg',
+        image: 'playroom-render.png',
         alt: 'Future render placeholder for the CORE TLV playroom and gymboree',
       },
       {
         title: 'Infinity Pool With Sky-Bar',
         text: 'An elevated leisure setting that combines water, views, and hospitality for sunset moments above the city.',
-        image: 'facility-placeholder.svg',
+        image: 'infinity-pool-render.png',
         alt: 'Future render placeholder for the CORE TLV infinity pool with sky-bar',
       },
     ],
@@ -403,6 +403,34 @@ const facilitiesContent = {
 
 const FacilitiesPage = ({ language = 'he' }) => {
   const content = facilitiesContent[language] || facilitiesContent.he;
+  const [activeFacilityIndex, setActiveFacilityIndex] = useState(0);
+  const [isCarouselInteracting, setIsCarouselInteracting] = useState(false);
+
+  useEffect(() => {
+    setActiveFacilityIndex(0);
+  }, [language]);
+
+  useEffect(() => {
+    if (isCarouselInteracting) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveFacilityIndex((currentIndex) => (currentIndex + 1) % content.facilities.length);
+    }, 5000);
+
+    return () => window.clearInterval(intervalId);
+  }, [content.facilities.length, isCarouselInteracting]);
+
+  const showPreviousFacility = () => {
+    setActiveFacilityIndex((currentIndex) =>
+      (currentIndex - 1 + content.facilities.length) % content.facilities.length
+    );
+  };
+
+  const showNextFacility = () => {
+    setActiveFacilityIndex((currentIndex) => (currentIndex + 1) % content.facilities.length);
+  };
 
   return (
     <div className="facilities-page" dir={language === 'he' ? 'rtl' : 'ltr'}>
@@ -449,6 +477,81 @@ const FacilitiesPage = ({ language = 'he' }) => {
           </div>
         </section>
       </div>
+
+      <section
+        className="facilities-carousel-section"
+        aria-label={language === 'he' ? 'קרוסלת הדמיות המתחמים' : 'Amenities image carousel'}
+      >
+        <div
+          className="facilities-carousel-shell"
+          onMouseEnter={() => setIsCarouselInteracting(true)}
+          onMouseLeave={() => setIsCarouselInteracting(false)}
+          onFocusCapture={() => setIsCarouselInteracting(true)}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setIsCarouselInteracting(false);
+            }
+          }}
+          onTouchStart={() => setIsCarouselInteracting(true)}
+          onTouchEnd={() => setIsCarouselInteracting(false)}
+          onTouchCancel={() => setIsCarouselInteracting(false)}
+        >
+          <div className="facilities-carousel-viewport">
+            {content.facilities.map((item, index) => (
+              <figure
+                className={`facilities-carousel-slide${
+                  index === activeFacilityIndex ? ' is-active' : ''
+                }`}
+                key={`carousel-${item.title}`}
+                aria-hidden={index !== activeFacilityIndex}
+              >
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/facilities/${item.image}`}
+                  alt={item.alt}
+                  className="facilities-carousel-image"
+                />
+              </figure>
+            ))}
+
+            <button
+              type="button"
+              className="facilities-carousel-arrow facilities-carousel-arrow-prev"
+              onClick={showPreviousFacility}
+              aria-label={language === 'he' ? 'לתמונה הקודמת' : 'Previous image'}
+            >
+              <span className="facilities-carousel-arrow-icon" aria-hidden="true" />
+            </button>
+
+            <button
+              type="button"
+              className="facilities-carousel-arrow facilities-carousel-arrow-next"
+              onClick={showNextFacility}
+              aria-label={language === 'he' ? 'לתמונה הבאה' : 'Next image'}
+            >
+              <span className="facilities-carousel-arrow-icon" aria-hidden="true" />
+            </button>
+
+            <div className="facilities-carousel-dots" aria-label={language === 'he' ? 'ניווט שקופיות' : 'Slide navigation'}>
+              {content.facilities.map((item, index) => (
+                <button
+                  type="button"
+                  className={`facilities-carousel-dot${
+                    index === activeFacilityIndex ? ' is-active' : ''
+                  }`}
+                  key={`dot-${item.title}`}
+                  onClick={() => setActiveFacilityIndex(index)}
+                  aria-label={
+                    language === 'he'
+                      ? `עבור לתמונה ${index + 1}: ${item.title}`
+                      : `Go to image ${index + 1}: ${item.title}`
+                  }
+                  aria-pressed={index === activeFacilityIndex}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

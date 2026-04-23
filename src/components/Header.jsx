@@ -10,7 +10,7 @@ const Header = ({ language, setLanguage }) => {
     { path: '/apartments', label: 'דירות' },
     { path: '/plans', label: 'תוכניות דירה' },
     { path: '/specifications', label: 'מפרטים' },
-    { path: '/facilities', label: 'מתחמים משותפים' },
+    { path: '/facilities', label: 'לייף סטייל' },
     { path: '/location', label: 'לוקיישן' },
     { path: '/about', label: 'היזמים' },
   ] : [
@@ -18,7 +18,7 @@ const Header = ({ language, setLanguage }) => {
     { path: '/apartments', label: 'Apartments' },
     { path: '/plans', label: 'Apartment Plans' },
     { path: '/specifications', label: 'Specifications' },
-    { path: '/facilities', label: 'Common Areas' },
+    { path: '/facilities', label: 'Lifestyle' },
     { path: '/location', label: 'Location' },
     { path: '/about', label: 'Developers' },
   ];
