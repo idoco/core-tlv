@@ -48,7 +48,7 @@ function App() {
             <Route path="/" element={<Home language={language} />} />
             <Route path="/architect" element={<Architecture language={language} />} />
             <Route path="/apartments" element={<Apartments />} />
-            <Route path="/plans" element={<Plans />} />
+            <Route path="/plans" element={<Plans language={language} />} />
             <Route path="/specifications" element={<Specifications language={language} />} />
             <Route path="/facilities" element={<Facilities language={language} />} />
             <Route path="/location" element={<Location language={language} />} />

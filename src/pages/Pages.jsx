@@ -284,6 +284,320 @@ const ArchitecturePage = ({ language = 'he' }) => {
   );
 };
 
+const apartmentPlanModels = [
+  {
+    id: 'a',
+    letter: 'A',
+    bedrooms: {
+      he: '4 חדרים',
+      en: '4 Bedrooms',
+    },
+    image: 'model-a-4-bedrooms.png',
+    position: {
+      top: '0%',
+      left: '48%',
+      width: '53%',
+    },
+  },
+  {
+    id: 'b',
+    letter: 'B',
+    bedrooms: {
+      he: '2 חדרים',
+      en: '2 Bedrooms',
+    },
+    image: 'model-b-2-bedrooms.png',
+    position: {
+      top: '0.8%',
+      left: '49.2%',
+      width: '18.1%',
+    },
+  },
+  {
+    id: 'c',
+    letter: 'C',
+    bedrooms: {
+      he: '4 חדרים',
+      en: '4 Bedrooms',
+    },
+    image: 'model-c-4-bedrooms.png',
+    position: {
+      top: '1.5%',
+      left: '1.1%',
+      width: '34%',
+    },
+  },
+  {
+    id: 'd',
+    letter: 'D',
+    bedrooms: {
+      he: '2 חדרים',
+      en: '2 Bedrooms',
+    },
+    image: 'model-d-2-bedrooms.png',
+    position: {
+      top: '30.7%',
+      left: '-0.8%',
+      width: '24%',
+    },
+  },
+  {
+    id: 'e',
+    letter: 'E',
+    bedrooms: {
+      he: '3 חדרים',
+      en: '3 Bedrooms',
+    },
+    image: 'model-e-3-bedrooms.png',
+    position: {
+      top: '67.9%',
+      left: '-0.7%',
+      width: '34.8%',
+    },
+  },
+  {
+    id: 'f',
+    letter: 'F',
+    bedrooms: {
+      he: '2 חדרים',
+      en: '2 Bedrooms',
+    },
+    image: 'model-f-2-bedrooms.png',
+    position: {
+      top: '67.7%',
+      left: '38.8%',
+      width: '18.9%',
+    },
+  },
+  {
+    id: 'g',
+    letter: 'G',
+    bedrooms: {
+      he: '3 חדרים',
+      en: '3 Bedrooms',
+    },
+    image: 'model-g-3-bedrooms.png',
+    position: {
+      top: '66.8%',
+      left: '61.8%',
+      width: '30.8%',
+    },
+  },
+  {
+    id: 'h',
+    letter: 'H',
+    bedrooms: {
+      he: '3 חדרים',
+      en: '3 Bedrooms',
+    },
+    image: 'model-h-3-bedrooms.png',
+    position: {
+      top: '30.6%',
+      left: '80.1%',
+      width: '19.1%',
+    },
+  },
+];
+
+const plansContent = {
+  he: {
+    title: 'תוכניות הקומה והדירות',
+    lead:
+      'לפניכם מבחר תוכניות הדירות של CORE TLV, המאפשר לעיין בכל דגם ולהתרשם מחלוקת החללים, אזורי המגורים והמרפסות.',
+    hint: 'בחרו את סוג הדירה שמעניין אתכם לצפייה בתוכנית.',
+    modelPrefix: 'דגם',
+    close: 'סגירה',
+    viewerTitle: 'תוכנית דירה',
+  },
+  en: {
+    title: 'Floor Plans',
+    lead:
+      'Explore the CORE TLV apartment plans and review each model’s layout, living areas, and outdoor spaces.',
+    hint: 'Select the apartment type you would like to view.',
+    modelPrefix: 'Model',
+    close: 'Close',
+    viewerTitle: 'Apartment Plan',
+  },
+};
+
+const PlansPage = ({ language = 'he' }) => {
+  const content = plansContent[language] || plansContent.he;
+  const [activePlanId, setActivePlanId] = useState(null);
+  const [selectedPlanId, setSelectedPlanId] = useState(apartmentPlanModels[0]?.id || null);
+
+  useEffect(() => {
+    setActivePlanId(null);
+  }, [language]);
+
+  useEffect(() => {
+    setSelectedPlanId(apartmentPlanModels[0]?.id || null);
+  }, [language]);
+
+  useEffect(() => {
+    if (!activePlanId) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setActivePlanId(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activePlanId]);
+
+  const activePlan = apartmentPlanModels.find((model) => model.id === activePlanId) || null;
+  const selectedPlan =
+    apartmentPlanModels.find((model) => model.id === selectedPlanId) || apartmentPlanModels[0];
+
+  return (
+    <div className="plans-page" dir={language === 'he' ? 'rtl' : 'ltr'}>
+      <div className="container plans-container">
+        <section className="plans-intro-section" aria-labelledby={`plans-title-${language}`}>
+          <div className="plans-intro-panel">
+            <div className="plans-intro-copy">
+              <h1 className="plans-intro-title" id={`plans-title-${language}`}>
+                {content.title}
+              </h1>
+              <p className="plans-intro-lead">{content.lead}</p>
+            </div>
+            <p className="plans-intro-hint">{content.hint}</p>
+          </div>
+        </section>
+
+        <section
+          className="plans-desktop-section"
+          aria-label={language === 'he' ? 'בחירת תוכנית דירה' : 'Apartment plan selection'}
+        >
+          <div className="plans-desktop-shell">
+            <aside className="plans-desktop-list-panel">
+              <div className="plans-desktop-list">
+                {apartmentPlanModels.map((model) => {
+                  const label = `${content.modelPrefix} ${model.letter}`;
+                  const isSelected = selectedPlan?.id === model.id;
+
+                  return (
+                    <button
+                      key={`desktop-${model.id}`}
+                      type="button"
+                      className={`plans-desktop-item${isSelected ? ' is-selected' : ''}`}
+                      onClick={() => setSelectedPlanId(model.id)}
+                      aria-pressed={isSelected}
+                    >
+                      <span className="plans-desktop-item-copy">
+                        <span className="plans-desktop-item-title">{label}</span>
+                        <span className="plans-desktop-item-meta">
+                          {model.bedrooms[language] || model.bedrooms.he}
+                        </span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </aside>
+
+            {selectedPlan && (
+              <div className="plans-desktop-viewer">
+                <div className="plans-desktop-viewer-copy">
+                  <p className="plans-desktop-viewer-eyebrow">{content.viewerTitle}</p>
+                  <h2 className="plans-desktop-viewer-title">
+                    {content.modelPrefix} {selectedPlan.letter}
+                  </h2>
+                  <p className="plans-desktop-viewer-meta">
+                    {selectedPlan.bedrooms[language] || selectedPlan.bedrooms.he}
+                  </p>
+                </div>
+
+                <div className="plans-desktop-image-shell">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/assets/apartments/${selectedPlan.image}`}
+                    alt={`${content.modelPrefix} ${selectedPlan.letter}`}
+                    className="plans-desktop-image"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section
+          className="plans-mobile-list-section"
+          aria-label={language === 'he' ? 'רשימת דירות' : 'Apartment list'}
+        >
+          <div className="plans-mobile-list">
+            {apartmentPlanModels.map((model) => {
+              const label = `${content.modelPrefix} ${model.letter}`;
+
+              return (
+                <button
+                  key={`mobile-${model.id}`}
+                  type="button"
+                  className="plans-mobile-item"
+                  onClick={() => setActivePlanId(model.id)}
+                >
+                  <span className="plans-mobile-item-copy">
+                    <span className="plans-mobile-item-title">{label}</span>
+                    <span className="plans-mobile-item-meta">
+                      {model.bedrooms[language] || model.bedrooms.he}
+                    </span>
+                  </span>
+                  <span className="plans-mobile-item-action" aria-hidden="true">
+                    {language === 'he' ? 'פתיחה' : 'Open'}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+
+      <div
+        className={`plans-viewer${activePlan ? ' is-open' : ''}`}
+        aria-hidden={!activePlan}
+        onClick={() => setActivePlanId(null)}
+      >
+        <div className="plans-viewer-backdrop" />
+
+        {activePlan && (
+          <div className="plans-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="plans-viewer-title">
+            <button
+              type="button"
+              className="plans-viewer-close"
+              aria-label={content.close}
+              onClick={() => setActivePlanId(null)}
+            >
+              {content.close}
+            </button>
+
+            <div className="plans-viewer-card" onClick={(event) => event.stopPropagation()}>
+              <div className="plans-viewer-copy">
+                <p className="plans-viewer-eyebrow">{content.viewerTitle}</p>
+                <h2 className="plans-viewer-title" id="plans-viewer-title">
+                  {content.modelPrefix} {activePlan.letter}
+                </h2>
+                <p className="plans-viewer-meta">
+                  {activePlan.bedrooms[language] || activePlan.bedrooms.he}
+                </p>
+              </div>
+
+              <div className="plans-viewer-image-shell">
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/apartments/${activePlan.image}`}
+                  alt={`${content.modelPrefix} ${activePlan.letter}`}
+                  className="plans-viewer-image"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const facilitiesContent = {
   he: {
     title: 'מתחמים משותפים לחיים אורבניים',
@@ -1204,7 +1518,7 @@ const LocationPage = ({ language = 'he' }) => {
 
 export const Architecture = ({ language }) => <ArchitecturePage language={language} />;
 export const Apartments = () => <PlaceholderPage title="Apartments / דירות" />;
-export const Plans = () => <PlaceholderPage title="Apartment Plans / תוכניות דירה" />;
+export const Plans = ({ language }) => <PlansPage language={language} />;
 export const Specifications = ({ language }) => <SpecificationsPage language={language} />;
 export const Facilities = ({ language }) => <FacilitiesPage language={language} />;
 export const Location = ({ language }) => <LocationPage language={language} />;

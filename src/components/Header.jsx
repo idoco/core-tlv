@@ -12,7 +12,7 @@ const Header = ({ language, setLanguage }) => {
     { path: '/specifications', label: 'מפרטים' },
     { path: '/facilities', label: 'לייף סטייל' },
     { path: '/location', label: 'לוקיישן' },
-    { path: '/about', label: 'היזמים' },
+    { path: '/about', label: 'על המיזם' },
   ] : [
     { path: '/architect', label: 'Architecture' },
     { path: '/apartments', label: 'Apartments' },
@@ -20,7 +20,7 @@ const Header = ({ language, setLanguage }) => {
     { path: '/specifications', label: 'Specifications' },
     { path: '/facilities', label: 'Lifestyle' },
     { path: '/location', label: 'Location' },
-    { path: '/about', label: 'Developers' },
+    { path: '/about', label: 'The Project' },
   ];
 
   const toggleLanguage = () => {
