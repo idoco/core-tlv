@@ -239,6 +239,12 @@
   transition: color 220ms ease;
 }
 
+.plans-link-group {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
 [dir='rtl'] .plans-pdf-link::before {
   content: '←';
 }

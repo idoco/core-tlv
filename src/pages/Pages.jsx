@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './Pages.css';
 
@@ -377,6 +378,7 @@ const plansContent = {
     close: 'סגירה',
     viewerTitle: 'תוכנית דירה',
     pdfLink: 'תוכנית אדריכלית',
+    specificationsLink: 'למפרט הטכני',
   },
   en: {
     title: 'Floor Plans',
@@ -387,6 +389,7 @@ const plansContent = {
     close: 'Close',
     viewerTitle: 'Apartment Plan',
     pdfLink: 'Architectural plan',
+    specificationsLink: 'Specifications',
   },
 };
 
@@ -479,14 +482,19 @@ const PlansPage = ({ language = 'he' }) => {
                   <p className="plans-desktop-viewer-meta">
                     {selectedPlan.bedrooms[language] || selectedPlan.bedrooms.he}
                   </p>
-                  <a
-                    href={`${process.env.PUBLIC_URL}/assets/apartments-pdfs/${encodeURIComponent(selectedPlan.pdf)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="plans-pdf-link"
-                  >
-                    {content.pdfLink}
-                  </a>
+                  <div className="plans-link-group">
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/apartments-pdfs/${encodeURIComponent(selectedPlan.pdf)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="plans-pdf-link"
+                    >
+                      {content.pdfLink}
+                    </a>
+                    <Link to="/specifications" className="plans-pdf-link">
+                      {content.specificationsLink}
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="plans-desktop-image-shell">
@@ -559,14 +567,19 @@ const PlansPage = ({ language = 'he' }) => {
                 <p className="plans-viewer-meta">
                   {activePlan.bedrooms[language] || activePlan.bedrooms.he}
                 </p>
-                <a
-                  href={`${process.env.PUBLIC_URL}/assets/apartments-pdfs/${encodeURIComponent(activePlan.pdf)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="plans-pdf-link"
-                >
-                  {content.pdfLink}
-                </a>
+                <div className="plans-link-group">
+                  <a
+                    href={`${process.env.PUBLIC_URL}/assets/apartments-pdfs/${encodeURIComponent(activePlan.pdf)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="plans-pdf-link"
+                  >
+                    {content.pdfLink}
+                  </a>
+                  <Link to="/specifications" className="plans-pdf-link">
+                    {content.specificationsLink}
+                  </Link>
+                </div>
               </div>
 
               <div className="plans-viewer-image-shell">
