@@ -224,6 +224,36 @@
   line-height: 1.7;
 }
 
+.plans-pdf-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  justify-self: start;
+  padding: 0;
+  color: rgba(17, 17, 17, 0.8);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: color 220ms ease;
+}
+
+[dir='rtl'] .plans-pdf-link::before {
+  content: '←';
+}
+
+[dir='ltr'] .plans-pdf-link::before {
+  content: '→';
+}
+
+.plans-pdf-link:hover,
+.plans-pdf-link:focus-visible {
+  color: #111;
+  text-decoration: underline;
+  outline: none;
+}
+
 .plans-desktop-image-shell {
   display: grid;
   place-items: center;

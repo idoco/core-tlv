@@ -6,16 +6,16 @@ const Header = ({ language, setLanguage }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = language === 'he' ? [
-    { path: '/architect', label: 'אדריכלות' },
-    { path: '/apartments', label: 'דירות' },
+    { path: '/apartments', label: 'הרשמה למיזם' },
+    { path: '/architect', label: 'מי אנחנו' },
     { path: '/plans', label: 'תוכניות דירה' },
     { path: '/specifications', label: 'מפרטים' },
     { path: '/facilities', label: 'לייף סטייל' },
     { path: '/location', label: 'לוקיישן' },
     { path: '/about', label: 'על המיזם' },
   ] : [
-    { path: '/architect', label: 'Architecture' },
-    { path: '/apartments', label: 'Apartments' },
+    { path: '/apartments', label: 'Register' },
+    { path: '/architect', label: 'About Us' },
     { path: '/plans', label: 'Apartment Plans' },
     { path: '/specifications', label: 'Specifications' },
     { path: '/facilities', label: 'Lifestyle' },

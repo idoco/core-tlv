@@ -293,11 +293,7 @@ const apartmentPlanModels = [
       en: '4 Bedrooms',
     },
     image: 'model-a-4-bedrooms.png',
-    position: {
-      top: '0%',
-      left: '48%',
-      width: '53%',
-    },
+    pdf: 'Sheet-תוכנית דירה A.pdf',
   },
   {
     id: 'b',
@@ -307,11 +303,7 @@ const apartmentPlanModels = [
       en: '2 Bedrooms',
     },
     image: 'model-b-2-bedrooms.png',
-    position: {
-      top: '0.8%',
-      left: '49.2%',
-      width: '18.1%',
-    },
+    pdf: 'Sheet-תוכנית דירה B.pdf',
   },
   {
     id: 'c',
@@ -321,11 +313,7 @@ const apartmentPlanModels = [
       en: '4 Bedrooms',
     },
     image: 'model-c-4-bedrooms.png',
-    position: {
-      top: '1.5%',
-      left: '1.1%',
-      width: '34%',
-    },
+    pdf: 'Sheet-תוכנית דירה C.pdf',
   },
   {
     id: 'd',
@@ -335,11 +323,7 @@ const apartmentPlanModels = [
       en: '2 Bedrooms',
     },
     image: 'model-d-2-bedrooms.png',
-    position: {
-      top: '30.7%',
-      left: '-0.8%',
-      width: '24%',
-    },
+    pdf: 'Sheet-תוכנית דירה D.pdf',
   },
   {
     id: 'e',
@@ -349,11 +333,7 @@ const apartmentPlanModels = [
       en: '3 Bedrooms',
     },
     image: 'model-e-3-bedrooms.png',
-    position: {
-      top: '67.9%',
-      left: '-0.7%',
-      width: '34.8%',
-    },
+    pdf: 'Sheet-תוכנית דירה E.pdf',
   },
   {
     id: 'f',
@@ -363,11 +343,7 @@ const apartmentPlanModels = [
       en: '2 Bedrooms',
     },
     image: 'model-f-2-bedrooms.png',
-    position: {
-      top: '67.7%',
-      left: '38.8%',
-      width: '18.9%',
-    },
+    pdf: 'Sheet-תוכנית דירה F.pdf',
   },
   {
     id: 'g',
@@ -377,11 +353,7 @@ const apartmentPlanModels = [
       en: '3 Bedrooms',
     },
     image: 'model-g-3-bedrooms.png',
-    position: {
-      top: '66.8%',
-      left: '61.8%',
-      width: '30.8%',
-    },
+    pdf: 'Sheet-תוכנית דירה G.pdf',
   },
   {
     id: 'h',
@@ -391,11 +363,7 @@ const apartmentPlanModels = [
       en: '3 Bedrooms',
     },
     image: 'model-h-3-bedrooms.png',
-    position: {
-      top: '30.6%',
-      left: '80.1%',
-      width: '19.1%',
-    },
+    pdf: 'Sheet-תוכנית דירה H.pdf',
   },
 ];
 
@@ -408,6 +376,7 @@ const plansContent = {
     modelPrefix: 'דגם',
     close: 'סגירה',
     viewerTitle: 'תוכנית דירה',
+    pdfLink: 'תוכנית אדריכלית',
   },
   en: {
     title: 'Floor Plans',
@@ -417,6 +386,7 @@ const plansContent = {
     modelPrefix: 'Model',
     close: 'Close',
     viewerTitle: 'Apartment Plan',
+    pdfLink: 'Architectural plan',
   },
 };
 
@@ -509,6 +479,14 @@ const PlansPage = ({ language = 'he' }) => {
                   <p className="plans-desktop-viewer-meta">
                     {selectedPlan.bedrooms[language] || selectedPlan.bedrooms.he}
                   </p>
+                  <a
+                    href={`${process.env.PUBLIC_URL}/assets/apartments-pdfs/${encodeURIComponent(selectedPlan.pdf)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="plans-pdf-link"
+                  >
+                    {content.pdfLink}
+                  </a>
                 </div>
 
                 <div className="plans-desktop-image-shell">
@@ -581,6 +559,14 @@ const PlansPage = ({ language = 'he' }) => {
                 <p className="plans-viewer-meta">
                   {activePlan.bedrooms[language] || activePlan.bedrooms.he}
                 </p>
+                <a
+                  href={`${process.env.PUBLIC_URL}/assets/apartments-pdfs/${encodeURIComponent(activePlan.pdf)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="plans-pdf-link"
+                >
+                  {content.pdfLink}
+                </a>
               </div>
 
               <div className="plans-viewer-image-shell">
