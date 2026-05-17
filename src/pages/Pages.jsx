@@ -374,6 +374,10 @@ const plansContent = {
     lead:
       'לפניכם מבחר תוכניות הדירות של CORE TLV, המאפשר לעיין בכל דגם ולהתרשם מחלוקת החללים, אזורי המגורים והמרפסות.',
     hint: 'בחרו את סוג הדירה שמעניין אתכם לצפייה בתוכנית.',
+    interiorsEyebrow: 'הדמיות פנים',
+    interiorsTitle: 'הצצה לעיצוב הפנים של הדירות',
+    interiorsLead:
+      'גלריית הדמיות המציגה את חללי הפנים של הדירות, מהסלון והמטבח ועד חדרי השינה והמבט אל המרפסת.',
     modelPrefix: 'דגם',
     close: 'סגירה',
     viewerTitle: 'תוכנית דירה',
@@ -385,12 +389,244 @@ const plansContent = {
     lead:
       'Explore the CORE TLV apartment plans and review each model’s layout, living areas, and outdoor spaces.',
     hint: 'Select the apartment type you would like to view.',
+    interiorsEyebrow: 'Apartment Interiors',
+    interiorsTitle: 'A closer look at the interior design',
+    interiorsLead:
+      'A render gallery showing the apartment interiors, from the living areas and kitchens to the bedrooms and balcony views.',
     modelPrefix: 'Model',
     close: 'Close',
     viewerTitle: 'Apartment Plan',
     pdfLink: 'Architectural plan',
     specificationsLink: 'Specifications',
   },
+};
+
+const apartmentInteriorImages = [
+  {
+    image: 'apartment-interior-01.png',
+    title: {
+      he: 'סלון דגם H · 3 חדרים',
+      en: 'Model H living room · 3 rooms',
+    },
+    alt: {
+      he: 'הדמיית סלון דגם H בדירת 3 חדרים',
+      en: 'Render of the Model H living room in a 3-room apartment',
+    },
+  },
+  {
+    image: 'apartment-interior-02.png',
+    title: {
+      he: 'חלל מטבח · 3 חדרים',
+      en: 'Kitchen space · 3 rooms',
+    },
+    alt: {
+      he: 'הדמיית חלל מטבח בדירת 3 חדרים',
+      en: 'Render of the kitchen space in a 3-room apartment',
+    },
+  },
+  {
+    image: 'apartment-interior-03.png',
+    title: {
+      he: 'סלון דירת 2 חדרים',
+      en: '2-room apartment living room',
+    },
+    alt: {
+      he: 'הדמיית סלון בדירת 2 חדרים',
+      en: 'Render of the living room in a 2-room apartment',
+    },
+  },
+  {
+    image: 'apartment-interior-04.png',
+    title: {
+      he: 'חדר שינה הורים עם מבט לחלון',
+      en: 'Master bedroom facing the window',
+    },
+    alt: {
+      he: 'הדמיית חדר שינה הורים עם מבט אל החלון',
+      en: 'Render of the master bedroom facing the window',
+    },
+  },
+  {
+    image: 'apartment-interior-05.png',
+    title: {
+      he: 'חדר שינה הורים',
+      en: 'Master bedroom',
+    },
+    alt: {
+      he: 'הדמיית חדר שינה הורים',
+      en: 'Render of the master bedroom',
+    },
+  },
+  {
+    image: 'apartment-interior-06.png',
+    title: {
+      he: 'מבט למרפסת · 4 חדרים',
+      en: 'Balcony view · 4 rooms',
+    },
+    alt: {
+      he: 'הדמיה של מבט לכיוון המרפסת בדירת 4 חדרים',
+      en: 'Render of the balcony view in a 4-room apartment',
+    },
+  },
+  {
+    image: 'apartment-interior-07.png',
+    title: {
+      he: 'מטבח בלבד · 3 חדרים',
+      en: 'Kitchen only · 3 rooms',
+    },
+    alt: {
+      he: 'הדמיית מטבח בדירת 3 חדרים',
+      en: 'Render of the kitchen in a 3-room apartment',
+    },
+  },
+  {
+    image: 'apartment-interior-08.png',
+    title: {
+      he: 'מטבח ואי · 4 חדרים',
+      en: 'Kitchen and island · 4 rooms',
+    },
+    alt: {
+      he: 'הדמיית מטבח ואי בדירת 4 חדרים',
+      en: 'Render of the kitchen and island in a 4-room apartment',
+    },
+  },
+  {
+    image: 'apartment-interior-09.png',
+    title: {
+      he: 'סלון נוסף · דירת 2 חדרים',
+      en: 'Additional living room view · 2-room apartment',
+    },
+    alt: {
+      he: 'הדמיית סלון נוספת בדירת 2 חדרים',
+      en: 'Additional render of the living room in a 2-room apartment',
+    },
+  },
+];
+
+const getLocalizedCarouselText = (value, language = 'he') => {
+  if (typeof value === 'string') {
+    return value;
+  }
+
+  if (value && typeof value === 'object') {
+    return value[language] || value.he || Object.values(value)[0] || '';
+  }
+
+  return '';
+};
+
+const ImageCarousel = ({ items, language = 'he', assetPath, ariaLabel, className = '' }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isInteracting, setIsInteracting] = useState(false);
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [language, items.length]);
+
+  useEffect(() => {
+    if (isInteracting || items.length < 2) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((currentIndex) => (currentIndex + 1) % items.length);
+    }, 5000);
+
+    return () => window.clearInterval(intervalId);
+  }, [isInteracting, items.length]);
+
+  if (!items.length) {
+    return null;
+  }
+
+  const showPreviousImage = () => {
+    setActiveIndex((currentIndex) => (currentIndex - 1 + items.length) % items.length);
+  };
+
+  const showNextImage = () => {
+    setActiveIndex((currentIndex) => (currentIndex + 1) % items.length);
+  };
+
+  return (
+    <section
+      className={`facilities-carousel-section${className ? ` ${className}` : ''}`}
+      aria-label={getLocalizedCarouselText(ariaLabel, language)}
+    >
+      <div
+        className="facilities-carousel-shell"
+        onMouseEnter={() => setIsInteracting(true)}
+        onMouseLeave={() => setIsInteracting(false)}
+        onFocusCapture={() => setIsInteracting(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            setIsInteracting(false);
+          }
+        }}
+        onTouchStart={() => setIsInteracting(true)}
+        onTouchEnd={() => setIsInteracting(false)}
+        onTouchCancel={() => setIsInteracting(false)}
+      >
+        <div className="facilities-carousel-viewport">
+          {items.map((item, index) => {
+            const itemAlt = getLocalizedCarouselText(item.alt, language);
+
+            return (
+              <figure
+                className={`facilities-carousel-slide${index === activeIndex ? ' is-active' : ''}`}
+                key={`carousel-${assetPath}-${item.image}`}
+                aria-hidden={index !== activeIndex}
+              >
+                <img
+                  src={`${process.env.PUBLIC_URL}${assetPath}/${item.image}`}
+                  alt={itemAlt}
+                  className="facilities-carousel-image"
+                />
+              </figure>
+            );
+          })}
+
+          <button
+            type="button"
+            className="facilities-carousel-arrow facilities-carousel-arrow-prev"
+            onClick={showPreviousImage}
+            aria-label={language === 'he' ? 'לתמונה הקודמת' : 'Previous image'}
+          >
+            <span className="facilities-carousel-arrow-icon" aria-hidden="true" />
+          </button>
+
+          <button
+            type="button"
+            className="facilities-carousel-arrow facilities-carousel-arrow-next"
+            onClick={showNextImage}
+            aria-label={language === 'he' ? 'לתמונה הבאה' : 'Next image'}
+          >
+            <span className="facilities-carousel-arrow-icon" aria-hidden="true" />
+          </button>
+
+          <div className="facilities-carousel-dots" aria-label={language === 'he' ? 'ניווט שקופיות' : 'Slide navigation'}>
+            {items.map((item, index) => {
+              const itemTitle = getLocalizedCarouselText(item.title, language);
+
+              return (
+                <button
+                  type="button"
+                  className={`facilities-carousel-dot${index === activeIndex ? ' is-active' : ''}`}
+                  key={`dot-${assetPath}-${item.image}`}
+                  onClick={() => setActiveIndex(index)}
+                  aria-label={
+                    language === 'he'
+                      ? `עבור לתמונה ${index + 1}: ${itemTitle}`
+                      : `Go to image ${index + 1}: ${itemTitle}`
+                  }
+                  aria-pressed={index === activeIndex}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 const PlansPage = ({ language = 'he' }) => {
@@ -538,7 +774,31 @@ const PlansPage = ({ language = 'he' }) => {
             })}
           </div>
         </section>
+
+        <section
+          className="plans-interiors-section"
+          aria-labelledby={`plans-interiors-title-${language}`}
+        >
+          <div className="plans-interiors-panel">
+            <p className="plans-interiors-eyebrow">{content.interiorsEyebrow}</p>
+            <h2 className="plans-interiors-title" id={`plans-interiors-title-${language}`}>
+              {content.interiorsTitle}
+            </h2>
+            <p className="plans-interiors-lead">{content.interiorsLead}</p>
+          </div>
+        </section>
       </div>
+
+      <ImageCarousel
+        items={apartmentInteriorImages}
+        language={language}
+        assetPath="/assets/interiors"
+        ariaLabel={{
+          he: 'קרוסלת הדמיות פנים הדירות',
+          en: 'Apartment interiors image carousel',
+        }}
+        className="plans-interiors-carousel-section"
+      />
 
       <div
         className={`plans-viewer${activePlan ? ' is-open' : ''}`}
@@ -716,35 +976,6 @@ const facilitiesContent = {
 
 const FacilitiesPage = ({ language = 'he' }) => {
   const content = facilitiesContent[language] || facilitiesContent.he;
-  const [activeFacilityIndex, setActiveFacilityIndex] = useState(0);
-  const [isCarouselInteracting, setIsCarouselInteracting] = useState(false);
-
-  useEffect(() => {
-    setActiveFacilityIndex(0);
-  }, [language]);
-
-  useEffect(() => {
-    if (isCarouselInteracting) {
-      return undefined;
-    }
-
-    const intervalId = window.setInterval(() => {
-      setActiveFacilityIndex((currentIndex) => (currentIndex + 1) % content.facilities.length);
-    }, 5000);
-
-    return () => window.clearInterval(intervalId);
-  }, [content.facilities.length, isCarouselInteracting]);
-
-  const showPreviousFacility = () => {
-    setActiveFacilityIndex((currentIndex) =>
-      (currentIndex - 1 + content.facilities.length) % content.facilities.length
-    );
-  };
-
-  const showNextFacility = () => {
-    setActiveFacilityIndex((currentIndex) => (currentIndex + 1) % content.facilities.length);
-  };
-
   return (
     <div className="facilities-page" dir={language === 'he' ? 'rtl' : 'ltr'}>
       <div className="container facilities-container">
@@ -791,80 +1022,15 @@ const FacilitiesPage = ({ language = 'he' }) => {
         </section>
       </div>
 
-      <section
-        className="facilities-carousel-section"
-        aria-label={language === 'he' ? 'קרוסלת הדמיות המתחמים' : 'Amenities image carousel'}
-      >
-        <div
-          className="facilities-carousel-shell"
-          onMouseEnter={() => setIsCarouselInteracting(true)}
-          onMouseLeave={() => setIsCarouselInteracting(false)}
-          onFocusCapture={() => setIsCarouselInteracting(true)}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) {
-              setIsCarouselInteracting(false);
-            }
-          }}
-          onTouchStart={() => setIsCarouselInteracting(true)}
-          onTouchEnd={() => setIsCarouselInteracting(false)}
-          onTouchCancel={() => setIsCarouselInteracting(false)}
-        >
-          <div className="facilities-carousel-viewport">
-            {content.facilities.map((item, index) => (
-              <figure
-                className={`facilities-carousel-slide${
-                  index === activeFacilityIndex ? ' is-active' : ''
-                }`}
-                key={`carousel-${item.title}`}
-                aria-hidden={index !== activeFacilityIndex}
-              >
-                <img
-                  src={`${process.env.PUBLIC_URL}/assets/facilities/${item.image}`}
-                  alt={item.alt}
-                  className="facilities-carousel-image"
-                />
-              </figure>
-            ))}
-
-            <button
-              type="button"
-              className="facilities-carousel-arrow facilities-carousel-arrow-prev"
-              onClick={showPreviousFacility}
-              aria-label={language === 'he' ? 'לתמונה הקודמת' : 'Previous image'}
-            >
-              <span className="facilities-carousel-arrow-icon" aria-hidden="true" />
-            </button>
-
-            <button
-              type="button"
-              className="facilities-carousel-arrow facilities-carousel-arrow-next"
-              onClick={showNextFacility}
-              aria-label={language === 'he' ? 'לתמונה הבאה' : 'Next image'}
-            >
-              <span className="facilities-carousel-arrow-icon" aria-hidden="true" />
-            </button>
-
-            <div className="facilities-carousel-dots" aria-label={language === 'he' ? 'ניווט שקופיות' : 'Slide navigation'}>
-              {content.facilities.map((item, index) => (
-                <button
-                  type="button"
-                  className={`facilities-carousel-dot${
-                    index === activeFacilityIndex ? ' is-active' : ''
-                  }`}
-                  key={`dot-${item.title}`}
-                  onClick={() => setActiveFacilityIndex(index)}
-                  aria-label={
-                    language === 'he'
-                      ? `עבור לתמונה ${index + 1}: ${item.title}`
-                      : `Go to image ${index + 1}: ${item.title}`
-                  }
-                  aria-pressed={index === activeFacilityIndex}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <ImageCarousel
+        items={content.facilities}
+        language={language}
+        assetPath="/assets/facilities"
+        ariaLabel={{
+          he: 'קרוסלת הדמיות המתחמים',
+          en: 'Amenities image carousel',
+        }}
+      />
     </div>
   );
 };
