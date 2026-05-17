@@ -7,17 +7,17 @@ const Home = ({ language }) => {
 
   const content = {
     he: {
-      mainHeading: 'לראשונה: רובע מגורים חדש במרכז ת״א',
-      subHeading: 'For the first time ever: a new residential quarter in Central Tel Aviv',
+      mainHeading: 'ממוקם במרכז ת״א, בדיוק במקום שבו הכל קורה',
+      subHeading: 'In the heart of Tel Aviv, where it all happens',
       description: 'הכירו את CORE TLV, הרובע שבו האמת של תל אביב מחכה לכם ממש מתחת לבית. תתכוננו לפגוש במרחק הליכה מביתכם את האנרגיה והאווירה התל אביבית. את ההיסטוריה ואת העתיד של העיר, את הטעמים שלה ואת ניחוח הקפה האיכותי, את תל אביב של אנשי העסקים ואת תל אביב של אנשי התרבות והאומנות.',
-      location: 'בואו להיות חלק מרובע מגורים חדש במרכז תל אביב, הנפרס בין הרחובות ארלוזורוב, נמיר ודפנה.',
+      location: 'בואו להיות חלק מ-CORE TLV, הממוקם במרכז תל אביב בדיוק במקום שבו הכל קורה, בין הרחובות ארלוזורוב, נמיר ודפנה.',
       cta: 'להשארת פרטים >'
     },
     en: {
-      mainHeading: 'For the first time ever: a new residential quarter in Central Tel Aviv',
+      mainHeading: 'In the heart of Tel Aviv, where it all happens',
       subHeading: '',
       description: "Introducing CORE TLV – the stunning new quarter where the true Tel Aviv awaits you right on your doorstep. Get ready to embrace the dynamic energy and kinetic atmosphere of Tel Aviv within walking distance: the city's fascinating history and inspiring future, countless flavors and the aroma of great coffee, the Tel Aviv of entrepreneurs and the Tel Aviv of artists.",
-      location: 'Come and be part of this exciting new residential quarter in Central Tel Aviv, bordered by Arlozorov, Namir, and Dafna Streets.',
+      location: 'Be part of CORE TLV, in the heart of Tel Aviv, where it all happens, bordered by Arlozorov, Namir, and Dafna Streets.',
       cta: "Let's talk >"
     }
   };
