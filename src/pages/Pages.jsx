@@ -230,13 +230,15 @@ const SpecificationsPage = ({ language = 'he' }) => {
           </div>
         </section>
       </div>
-      <div className="specs-bottom-image-wrap" aria-hidden="true">
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/images/specifications-bottom.jpg`}
-          alt=""
-          className="specs-bottom-image"
-        />
-      </div>
+      <ImageCarousel
+        items={apartmentInteriorImages}
+        language={language}
+        assetPath="/assets/interiors"
+        ariaLabel={{
+          he: 'קרוסלת הדמיות פנים הדירות',
+          en: 'Apartment interiors image carousel',
+        }}
+      />
     </div>
   );
 };
@@ -374,10 +376,6 @@ const plansContent = {
     lead:
       'לפניכם מבחר תוכניות הדירות של CORE TLV, המאפשר לעיין בכל דגם ולהתרשם מחלוקת החללים, אזורי המגורים והמרפסות.',
     hint: 'בחרו את סוג הדירה שמעניין אתכם לצפייה בתוכנית.',
-    interiorsEyebrow: 'הדמיות פנים',
-    interiorsTitle: 'הצצה לעיצוב הפנים של הדירות',
-    interiorsLead:
-      'גלריית הדמיות המציגה את חללי הפנים של הדירות, מהסלון והמטבח ועד חדרי השינה והמבט אל המרפסת.',
     modelPrefix: 'דגם',
     close: 'סגירה',
     viewerTitle: 'תוכנית דירה',
@@ -389,10 +387,6 @@ const plansContent = {
     lead:
       'Explore the CORE TLV apartment plans and review each model’s layout, living areas, and outdoor spaces.',
     hint: 'Select the apartment type you would like to view.',
-    interiorsEyebrow: 'Apartment Interiors',
-    interiorsTitle: 'A closer look at the interior design',
-    interiorsLead:
-      'A render gallery showing the apartment interiors, from the living areas and kitchens to the bedrooms and balcony views.',
     modelPrefix: 'Model',
     close: 'Close',
     viewerTitle: 'Apartment Plan',
@@ -772,19 +766,6 @@ const PlansPage = ({ language = 'he' }) => {
                 </button>
               );
             })}
-          </div>
-        </section>
-
-        <section
-          className="plans-interiors-section"
-          aria-labelledby={`plans-interiors-title-${language}`}
-        >
-          <div className="plans-interiors-panel">
-            <p className="plans-interiors-eyebrow">{content.interiorsEyebrow}</p>
-            <h2 className="plans-interiors-title" id={`plans-interiors-title-${language}`}>
-              {content.interiorsTitle}
-            </h2>
-            <p className="plans-interiors-lead">{content.interiorsLead}</p>
           </div>
         </section>
       </div>
