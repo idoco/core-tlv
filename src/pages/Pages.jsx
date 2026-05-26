@@ -548,8 +548,6 @@ const ImageCarousel = ({ items, language = 'he', assetPath, ariaLabel, className
     >
       <div
         className="facilities-carousel-shell"
-        onMouseEnter={() => setIsInteracting(true)}
-        onMouseLeave={() => setIsInteracting(false)}
         onFocusCapture={() => setIsInteracting(true)}
         onBlurCapture={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget)) {
