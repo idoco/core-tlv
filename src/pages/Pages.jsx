@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  CreditCard,
+  FilePenLine,
+  House,
+  Hourglass,
+  KeyRound,
+  MonitorPlay,
+  Tickets,
+} from 'lucide-react';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './Pages.css';
 
@@ -11,6 +20,320 @@ const PlaceholderPage = ({ title }) => {
         <p style={{ fontSize: '18px', color: '#666' }}>
           This page is coming soon...
         </p>
+      </div>
+    </div>
+  );
+};
+
+const registrationStepIcons = {
+  'step-1': FilePenLine,
+  'step-2': Tickets,
+  'step-3': MonitorPlay,
+  'step-4': Hourglass,
+  'step-5': House,
+  'step-6': KeyRound,
+  'step-7': CreditCard,
+};
+
+const registrationContent = {
+  he: {
+    eyebrow: 'מסלול ההצטרפות',
+    title: 'תהליך ההרשמה למיזם',
+    lead:
+      'אנחנו מאמינים בשקיפות מלאה בתהליך פשוט וברור. כאן תוכלו להכיר את 7 השלבים בדרך להצטרפות למיזם ובחירת הדירה שלכם.',
+    stepsAriaLabel: 'שלבי ההרשמה למיזם',
+    ctaLabel: 'לקישורי ההרשמה',
+    ctaHref: '',
+    steps: [
+      {
+        id: 'step-1',
+        phase: '1',
+        navTitle: 'מילוי טופס פרטים אישיים',
+        title: 'מילוי טופס פרטים אישיים ובקשה להצטרפות למיזם',
+        summary: 'זהו שער הכניסה למסלול ההצטרפות למיזם, עבור אוכלוסיות שאותרו מראש ובהתאם לאפיון המוקדם שלו.',
+        paragraphs: [
+          'ההרשמה למיזם מיועדת לאוכלוסיות שאותרו מראש. ההצטרפות נעשית דרך מסלול סגור לאוכלוסיות מוגדרות, בהתאם לאפיון המוקדם של המיזם.',
+          'תחילה עליכם להיכנס לקישור "טופס פרטים אישיים ובקשת הצטרפות", למלא את פרטיכם, ולעיין היטב בתנאי ההרשמה ובבקשה להצטרפות למיזם.',
+          'לאחר שליחת הטופס יישלח אליכם דואר אלקטרוני המאשר את קליטת בקשתכם. אישור זה אינו מהווה זכאות להצטרף למיזם, להשתתף בו, או לרכוש דירה, אלא רק מאשר שהפרטים והבקשה נקלטו בהצלחה באתר.',
+        ],
+      },
+      {
+        id: 'step-2',
+        phase: '2',
+        navTitle: 'הרשמה לכנס הסברה ולהגרלה',
+        title: 'הרשמה לכנס הסברה ולהגרלה',
+        summary: 'לאחר שקליטת הנתונים תאושר, ניתן להירשם לכנס ההסברה ולהגרלה באמצעות הסיסמה שתישלח במייל.',
+        paragraphs: [
+          'אחרי שהנתונים ייקלטו באתר ההרשמה, יישלח אליכם דואר אלקטרוני המודיע על כך. בשלב זה תוכלו להיכנס לקישור "הרשמה לכנס הסברה ולהגרלה".',
+          'ההרשמה לכנס ולהגרלה תתאפשר באמצעות הסיסמה המופיעה בדואר האלקטרוני שקיבלתם. אם לא קיבלתם את המייל, סימן שנתוני ההרשמה טרם נקלטו או שאין זכאות להשתתף במיזם.',
+          'ההרשמה כרוכה בתשלום דמי השתתפות בסך 420 ש"ח. בתום ההרשמה יישלח אליכם מייל עם קישור לכנס ההסברה ומועד ההגרלה. דמי ההשתתפות אינם מוחזרים גם אם לא זכיתם או אם החלטתם שלא לרכוש דירה.',
+        ],
+      },
+      {
+        id: 'step-3',
+        phase: '3',
+        navTitle: 'קבלת קישור וצפיה בכנס',
+        title: 'קבלת קישור וצפיה בכנס הסברה ולהגרלה',
+        summary: 'הכנס הדיגיטלי מציג את המיזם מכל ההיבטים: תכנוני, הנדסי, משפטי, כספי וניהולי.',
+        paragraphs: [
+          'לאחר שהרשמתכם נקלטה באתר ההרשמה, יישלח אליכם דואר אלקטרוני עם קישור לצפייה בכנס הסברה מצולם.',
+          'בכנס יוצגו ויוסברו על ידי הנהלת המיזם והצוות המקצועי פרטי הפרויקט, המתחמים המשותפים, יחידות הדיור, הקונספט האדריכלי, תוכנית ההעמדה והפיתוח הסביבתי.',
+          'בנוסף יפורטו ההיבטים ההנדסיים, המשפטיים, הכספיים והניהוליים, לרבות לוחות זמנים צפויים, עיקרי ההסכמים, מחירי הדירות, לוחות התשלומים ואופן קבלת ההחלטות והעדכונים לאורך הדרך.',
+        ],
+      },
+      {
+        id: 'step-4',
+        phase: '4',
+        navTitle: 'המתנה להגרלה ולתוצאותיה',
+        title: 'המתנה להגרלה ולהודעה על תוצאותיה',
+        summary: 'עם סיום ההרשמה ובדיקת התקינות, מתקיימת הגרלה הקובעת את סדר התור לבחירת הדירות בפרויקט.',
+        paragraphs: [
+          'אחרי סגירת ההרשמה ובדיקות תקינות הנרשמים, תיערך במשרד עורך הדין המלווה הגרלה על התור לבחירת דירה.',
+          'לאחר ההגרלה יישלחו לנרשמים בדואר אלקטרוני תוצאות ההגרלה. המספר שהתקבל מייצג את מקומכם בתור לבחירת יחידת הדיור מתוך המלאי הפנוי באותו מועד.',
+          'בהתאם לתוצאות, המנהלת תיצור קשר עם הזוכים לפי סדר עולה ותסביר את המשך התהליך. נרשמים שמספרם מעל 700 ייכנסו לרשימת המתנה וייפנו אליהם אם יישארו דירות פנויות.',
+        ],
+      },
+      {
+        id: 'step-5',
+        phase: '5',
+        navTitle: 'בחירת דירה וחתימה',
+        title: 'בחירת דירה וחתימה על חוזה רכישה מותנה',
+        summary: 'הזוכים מוזמנים לפי סדר הזכייה לבחור דירה, לחתום על טופס בחירה, ולהמשיך לחוזה רכישה מותנה.',
+        paragraphs: [
+          'בשלב זה הזוכים בהגרלה, לפי סדר עולה, יקבלו זימון מן המנהלת לבחירת דירה ולחתימה על חוזה רכישה מותנה. הפגישה תבוצע באמצעים דיגיטליים.',
+          'במעמד הבחירה יוצגו הדירות שנותרו לבחירה, ותידרשו לבחור דירה בתוך 45 דקות. הבחירה נעשית בהתאם למלאי הקיים ולא ניתן לשנותה גם אם יהיו ביטולים של זוכים שבחרו לפניכם.',
+          'לאחר בחירת הדירה תחתמו על טופס בחירה המפרט את היחידה שבחרתם, ובהמשך תופנו לחתימה על חוזה מותנה. בתוך 30 יום תידרשו להגיע למשרד עורך הדין, לחתום על ההסכם ולהמציא את כל הביטחונות והמסמכים הנדרשים.',
+        ],
+      },
+      {
+        id: 'step-6',
+        phase: '6',
+        navTitle: 'המתנה לזכיה בקרקע',
+        title: 'המתנה להודעה על זכיה בקרקע וכניסת ההסכם לתוקף',
+        summary: 'לאחר החתימה מוגשת הצעה לרכישת הקרקע, ורק הודעת הזכייה במכרז מכניסה את ההסכמים לתוקף משפטי.',
+        paragraphs: [
+          'לאחר בחירת הדירה וחתימה על הסכם מותנה במשרד עורך הדין, מנהלת המיזם תגיש הצעה לרכישת הקרקע לרשות מקרקעי ישראל בהתאם למכרז ולמועד שנקבע להגשת ההצעה.',
+          'עם קבלת תוצאות המכרז יישלחו לזוכים בדואר אלקטרוני הודעות עדכון על זכייה או אי זכייה בקרקע.',
+          'אם מתקבלת הודעת זכייה, ההסכמים המותנים שנחתמו נכנסים לתוקף חוקי ועל הזוכים להיערך לביצוע התשלום הראשון בתוך 60 יום. אם מתקבלת הודעת אי זכייה, המיזם מבוטל וההסכמים אינם נכנסים לתוקף.',
+        ],
+      },
+      {
+        id: 'step-7',
+        phase: '7',
+        navTitle: 'תשלום ראשון לרכישת הקרקע',
+        title: 'תשלום ראשון לרכישת הקרקע',
+        summary: 'לאחר הזכייה בקרקע נכנסים ההסכמים לתוקף, ומבוצע התשלום הראשון בהתאם ללוח התשלומים שנקבע.',
+        paragraphs: [
+          'עם קבלת ההודעה על הזכייה בקרקע נכנסים ההסכמים לתוקף, ועל הזוכים להעביר תשלום ראשון לפי לוח התשלומים שבהסכם תוך 60 יום.',
+          'התשלום הראשון מיועד להעברה לרשות מקרקעי ישראל לצורך רכישת הקרקע, ולכן חשוב להיערך אליו מראש בהתאם להנחיות שנמסרו במהלך התהליך.',
+          'לאחר רכישת הקרקע, התקדמות המיזם בהיבטים השונים תשוקף לזוכים אחת למספר שבועות באמצעות עדכונים שוטפים מטעם מנהלת המיזם.',
+        ],
+      },
+    ],
+  },
+  en: {
+    eyebrow: 'Registration Flow',
+    title: 'Project Registration Process',
+    lead:
+      'We believe in a transparent, well-structured process. This page walks through the seven stages that lead from registration to apartment selection.',
+    stepsAriaLabel: 'Project registration steps',
+    ctaLabel: 'Registration Links',
+    ctaHref: '',
+    steps: [
+      {
+        id: 'step-1',
+        phase: '1',
+        navTitle: 'Personal details form',
+        title: 'Personal Details Form and Request to Join the Project',
+        summary: 'This is the entry point into the registration path for audiences identified in advance for the project.',
+        paragraphs: [
+          'Registration is intended for pre-identified audiences. Joining the project is carried out through a closed path for defined groups, according to the project profile established in advance.',
+          'First, enter the "Personal Details and Join Request" link, fill in your information, and review the registration terms carefully.',
+          'After submitting the form, you will receive an email confirming that your request was received. This confirmation does not grant eligibility to join the project or purchase an apartment; it only confirms successful submission.',
+        ],
+      },
+      {
+        id: 'step-2',
+        phase: '2',
+        navTitle: 'Conference and lottery registration',
+        title: 'Registration for the Information Conference and Lottery',
+        summary: 'Once your details are received, you can register for the digital information session and lottery using the password sent by email.',
+        paragraphs: [
+          'After your data is received in the registration system, you will get an email notification. At that stage you can enter the "Conference and Lottery Registration" link.',
+          'Registration is enabled using the password included in the email you received. If no email arrived, your details may still be pending or you may not yet be eligible to participate.',
+          'This stage includes a participation fee of NIS 420. At the end of registration, you will receive an email with a link to the conference and the lottery date. The participation fee is not refundable, even if you do not win or later choose not to purchase an apartment.',
+        ],
+      },
+      {
+        id: 'step-3',
+        phase: '3',
+        navTitle: 'Conference link and viewing',
+        title: 'Receive the Link and Watch the Information Conference',
+        summary: 'The digital conference presents the project from planning, engineering, legal, financial, and management perspectives.',
+        paragraphs: [
+          'After your registration is processed, you will receive an email with a link to watch a recorded information conference.',
+          'The conference presents the project in full, including the shared amenities, housing units, architectural concept, site layout, and environmental development strategy.',
+          'It also covers engineering, legal, financial, and management aspects, including expected timelines, key agreement terms, apartment pricing, payment schedules, and how decisions and updates are handled throughout the process.',
+        ],
+      },
+      {
+        id: 'step-4',
+        phase: '4',
+        navTitle: 'Waiting for the lottery results',
+        title: 'Waiting for the Lottery and Its Results',
+        summary: 'Once registration closes and submissions are validated, a lottery determines the order for apartment selection.',
+        paragraphs: [
+          'After registration closes and the applicants are validated, a lottery is held at the accompanying law office to determine the queue for apartment selection.',
+          'Lottery results are sent by email. The number you receive represents your place in line for choosing from the apartments still available at your selection time.',
+          'Based on the results, the management team contacts winners in ascending order and explains the next stage. Registrants above number 700 remain on a waiting list and may be contacted if apartments become available.',
+        ],
+      },
+      {
+        id: 'step-5',
+        phase: '5',
+        navTitle: 'Apartment selection and signing',
+        title: 'Apartment Selection and Conditional Purchase Agreement',
+        summary: 'Winners are invited in order to choose an apartment, sign the selection form, and continue to a conditional agreement.',
+        paragraphs: [
+          'At this stage, winners are invited in ascending order to choose an apartment and sign a conditional purchase agreement. The appointment is conducted digitally.',
+          'Available apartments are presented during the meeting, and a selection must be made within 45 minutes. Selections depend on current inventory and cannot be changed later, even if earlier winners cancel.',
+          'After choosing the apartment, you sign a selection form and are referred to sign the conditional agreement. Within 30 days, you must arrive at the law office, sign the agreement, and provide all required documents and guarantees.',
+        ],
+      },
+      {
+        id: 'step-6',
+        phase: '6',
+        navTitle: 'Waiting for land tender result',
+        title: 'Waiting for the Land Tender Result and Agreement Activation',
+        summary: 'After signing, an offer is submitted for the land, and only a winning tender result activates the agreements legally.',
+        paragraphs: [
+          'After apartment selection and the signing of a conditional agreement, the project management submits an offer to purchase the land from the Israel Land Authority according to the tender schedule.',
+          'Once the tender results are received, winners are notified by email whether the land bid was successful or not.',
+          'If the bid succeeds, the conditional agreements come into legal effect and winners must prepare for the first payment within 60 days. If the bid does not succeed, the project is canceled and the agreements do not take effect.',
+        ],
+      },
+      {
+        id: 'step-7',
+        phase: '7',
+        navTitle: 'First payment for land purchase',
+        title: 'First Payment for the Land Purchase',
+        summary: 'After the land is won, the agreements take effect and the first payment is made according to the agreed payment schedule.',
+        paragraphs: [
+          'Once the land award notice is received, the agreements enter into force and the winners must transfer the first payment within 60 days according to the contract schedule.',
+          'This first payment is intended for the land purchase through the Israel Land Authority, so it should be planned in advance based on the instructions shared during the process.',
+          'After the land is acquired, project progress across the different workstreams will be shared with winners every few weeks through ongoing management updates.',
+        ],
+      },
+    ],
+  },
+};
+
+const RegistrationPage = ({ language = 'he' }) => {
+  const content = registrationContent[language] || registrationContent.he;
+  const [activeStepId, setActiveStepId] = useState(content.steps[0]?.id || null);
+
+  useEffect(() => {
+    setActiveStepId((currentStepId) => currentStepId || content.steps[0]?.id || null);
+  }, [content.steps]);
+
+  const activeStep =
+    content.steps.find((step) => step.id === activeStepId) || content.steps[0] || null;
+
+  if (!activeStep) {
+    return null;
+  }
+
+  return (
+    <div className="register-page" dir={language === 'he' ? 'rtl' : 'ltr'}>
+      <div className="container register-container">
+        <section className="register-hero-section" aria-labelledby={`register-title-${language}`}>
+          <div className="register-hero-panel">
+            <div className="register-hero-copy">
+              <p className="register-hero-eyebrow">{content.eyebrow}</p>
+              <h1 className="register-hero-title" id={`register-title-${language}`}>
+                {content.title}
+              </h1>
+              <p className="register-hero-lead">{content.lead}</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="register-flow-section" aria-label={content.stepsAriaLabel}>
+          <div className="register-flow-panel">
+            <div className="register-steps-rail" role="tablist" aria-label={content.stepsAriaLabel}>
+              {content.steps.map((step) => {
+                const isActive = step.id === activeStep.id;
+
+                return (
+                  <button
+                    key={step.id}
+                    id={`${step.id}-tab-${language}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`${step.id}-panel-${language}`}
+                    className={`register-step-tab${isActive ? ' is-active' : ''}`}
+                    onClick={() => setActiveStepId(step.id)}
+                  >
+                    <span className="register-step-marker" aria-hidden="true">
+                      {step.phase.replace(/[^\d]/g, '')}
+                    </span>
+                    <span className="register-step-detail">
+                      <span className="register-step-detail-copy">
+                        <span className="register-step-title">{step.navTitle}</span>
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <article
+              id={`${activeStep.id}-panel-${language}`}
+              role="tabpanel"
+              aria-labelledby={`${activeStep.id}-tab-${language}`}
+              className="register-step-card"
+            >
+              <div className="register-step-copy">
+                <h2 className="register-step-summary-title">{activeStep.title}</h2>
+                <p className="register-step-summary-lead">{activeStep.summary}</p>
+                {activeStep.paragraphs.map((paragraph) => (
+                  <p className="register-step-paragraph" key={paragraph}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              {(() => {
+                const ActiveStepIcon = registrationStepIcons[activeStep.id];
+
+                return (
+                  <div className="register-step-ornament" aria-hidden="true">
+                    {ActiveStepIcon ? <ActiveStepIcon className="register-step-card-icon" /> : null}
+                  </div>
+                );
+              })()}
+            </article>
+
+            <div className="register-cta-row">
+              <a
+                className={`register-cta-button${content.ctaHref ? '' : ' is-disabled'}`}
+                href={content.ctaHref || '#'}
+                aria-disabled={content.ctaHref ? undefined : 'true'}
+                onClick={(event) => {
+                  if (!content.ctaHref) {
+                    event.preventDefault();
+                  }
+                }}
+              >
+                <span className="register-cta-label">{content.ctaLabel}</span>
+                <span className="register-cta-icon" aria-hidden="true">
+                  {language === 'he' ? '›' : '›'}
+                </span>
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
@@ -1661,7 +1984,7 @@ const LocationPage = ({ language = 'he' }) => {
 };
 
 export const Architecture = ({ language }) => <ArchitecturePage language={language} />;
-export const Apartments = () => <PlaceholderPage title="Apartments / דירות" />;
+export const Register = ({ language }) => <RegistrationPage language={language} />;
 export const Plans = ({ language }) => <PlansPage language={language} />;
 export const Specifications = ({ language }) => <SpecificationsPage language={language} />;
 export const Facilities = ({ language }) => <FacilitiesPage language={language} />;

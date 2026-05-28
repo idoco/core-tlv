@@ -5,8 +5,8 @@ import './Header.css';
 const Header = ({ language, setLanguage }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navItems = language === 'he' ? [
-    { path: '/apartments', label: 'הרשמה למיזם' },
+  const desktopNavItems = language === 'he' ? [
+    { path: '/register', label: 'הרשמה למיזם' },
     { path: '/architect', label: 'מי אנחנו' },
     { path: '/plans', label: 'תוכניות דירה' },
     { path: '/specifications', label: 'מפרטים' },
@@ -14,7 +14,7 @@ const Header = ({ language, setLanguage }) => {
     { path: '/location', label: 'לוקיישן' },
     { path: '/about', label: 'על המיזם' },
   ] : [
-    { path: '/apartments', label: 'Register' },
+    { path: '/register', label: 'Register' },
     { path: '/architect', label: 'About Us' },
     { path: '/plans', label: 'Apartment Plans' },
     { path: '/specifications', label: 'Specifications' },
@@ -22,6 +22,8 @@ const Header = ({ language, setLanguage }) => {
     { path: '/location', label: 'Location' },
     { path: '/about', label: 'The Project' },
   ];
+
+  const mobileNavItems = [...desktopNavItems].reverse();
 
   const toggleLanguage = () => {
     const newLang = language === 'he' ? 'en' : 'he';
@@ -44,7 +46,7 @@ const Header = ({ language, setLanguage }) => {
         {/* Desktop Navigation */}
         <nav className="nav-desktop">
           <ul className="nav-list">
-            {navItems.map((item) => (
+            {desktopNavItems.map((item) => (
               <li key={item.path}>
                 <Link to={item.path} className="nav-link">
                   {item.label}
@@ -75,7 +77,7 @@ const Header = ({ language, setLanguage }) => {
       {menuOpen && (
         <nav className="nav-mobile">
           <ul className="nav-list-mobile">
-            {navItems.map((item) => (
+            {mobileNavItems.map((item) => (
               <li key={item.path}>
                 <Link 
                   to={item.path} 

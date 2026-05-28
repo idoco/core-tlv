@@ -5,6 +5,317 @@
   color: #111;
 }
 
+.register-page {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(191, 155, 112, 0.16), transparent 24%),
+    radial-gradient(circle at 88% 10%, rgba(86, 72, 54, 0.09), transparent 28%),
+    linear-gradient(180deg, #f4eee7 0%, #ece4da 100%);
+  min-height: 60vh;
+  padding: 64px 0 56px;
+  color: #111;
+}
+
+.register-container {
+  max-width: 1480px;
+}
+
+.register-hero-panel {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding: 26px 0 18px;
+  text-align: center;
+}
+
+.register-hero-copy,
+.register-steps-rail,
+.register-step-card {
+  position: relative;
+  z-index: 1;
+}
+
+.register-hero-copy {
+  display: grid;
+  gap: 16px;
+  max-width: 860px;
+}
+
+.register-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(120, 91, 61, 0.92);
+}
+
+.register-hero-eyebrow::before,
+.register-hero-eyebrow::after {
+  content: '';
+  width: 34px;
+  height: 1px;
+  background: rgba(180, 144, 101, 0.78);
+}
+
+.register-hero-title {
+  margin: 0;
+  font-size: clamp(2.25rem, 4vw, 4.2rem);
+  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.register-hero-lead,
+.register-step-summary-lead,
+.register-step-paragraph {
+  margin: 0;
+  font-size: 1.04rem;
+  line-height: 1.85;
+  color: rgba(17, 17, 17, 0.84);
+}
+
+.register-flow-section {
+  margin-top: 18px;
+}
+
+.register-flow-panel {
+  display: grid;
+  gap: 22px;
+  padding: 6px 0 0;
+}
+
+.register-steps-rail {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 0 30px;
+  margin-bottom: 6px;
+}
+
+.register-steps-rail::before {
+  content: '';
+  position: absolute;
+  inset-inline: 86px;
+  top: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(198, 166, 123, 0.18), rgba(186, 145, 87, 0.72), rgba(198, 166, 123, 0.18));
+  pointer-events: none;
+}
+
+.register-step-tab {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 0 10px 18px;
+  border: 0;
+  background: transparent;
+  color: #111;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 220ms ease, color 220ms ease;
+}
+
+.register-step-tab:hover,
+.register-step-tab:focus-visible {
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.register-step-marker {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  border: 1px solid rgba(186, 145, 87, 0.18);
+  background: rgba(255, 249, 242, 0.94);
+  color: rgba(24, 24, 24, 0.9);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  box-shadow: 0 10px 22px rgba(55, 44, 33, 0.06);
+  transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.register-step-tab.is-active .register-step-marker {
+  border-color: rgba(186, 145, 87, 0.9);
+  background: #1b1816;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(214, 188, 151, 0.54);
+}
+
+.register-step-detail {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+.register-step-detail-copy {
+  display: grid;
+  gap: 0;
+}
+
+.register-step-title {
+  display: block;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: rgba(17, 17, 17, 0.88);
+}
+
+.register-step-tab.is-active .register-step-title {
+  color: #111;
+}
+
+.register-step-tab.is-active::after {
+  content: '';
+  position: absolute;
+  inset-inline: calc(50% - 28px);
+  bottom: 0;
+  height: 2px;
+  background: rgba(180, 144, 101, 0.94);
+}
+
+.register-step-card {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: stretch;
+  border: 1px solid rgba(34, 34, 34, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(214, 190, 162, 0.12), transparent 28%),
+    rgba(255, 251, 247, 0.94);
+  box-shadow: 0 18px 42px rgba(55, 44, 33, 0.08);
+}
+
+.register-step-copy {
+  flex: 1 1 auto;
+  display: grid;
+  justify-items: stretch;
+  gap: 16px;
+  padding: clamp(28px, 3vw, 38px);
+}
+
+.register-step-summary-title {
+  margin: 0;
+  font-size: clamp(1.75rem, 2.7vw, 2.55rem);
+  line-height: 1.08;
+  font-weight: 700;
+  text-align: center;
+}
+
+.register-step-paragraph {
+  max-width: 980px;
+  text-align: right;
+}
+
+[dir='ltr'] .register-step-paragraph,
+[dir='ltr'] .register-step-summary-lead {
+  text-align: left;
+}
+
+.register-step-ornament {
+  flex: 0 0 240px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  border-inline-end: 1px solid rgba(34, 34, 34, 0.1);
+}
+
+.register-step-card-icon {
+  width: 82px;
+  height: 82px;
+  color: rgba(186, 145, 87, 0.86);
+  stroke-width: 1.6;
+}
+
+.register-cta-row {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 6px;
+}
+
+.register-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: 260px;
+  padding: 18px 34px;
+  background: #1b1816;
+  color: rgba(214, 172, 112, 0.98);
+  border: 1px solid rgba(76, 63, 49, 0.8);
+  box-shadow: 0 12px 26px rgba(17, 17, 17, 0.18);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 220ms ease, background-color 220ms ease, color 220ms ease;
+}
+
+.register-cta-label {
+  display: inline-block;
+}
+
+.register-cta-icon {
+  display: inline-block;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.register-cta-button:hover,
+.register-cta-button:focus-visible {
+  transform: translateY(-1px);
+  background: #111;
+  color: rgba(228, 192, 140, 1);
+  outline: none;
+}
+
+.register-cta-button.is-disabled {
+  cursor: default;
+}
+
+@media (max-width: 1100px) {
+  .register-steps-rail {
+    overflow-x: auto;
+    padding: 0 4px 8px;
+    scrollbar-width: thin;
+  }
+
+  .register-steps-rail::before {
+    inset-inline: 40px;
+  }
+
+  .register-step-tab {
+    flex: 0 0 164px;
+  }
+
+  .register-step-card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .register-step-copy {
+    padding: 24px 24px 0;
+  }
+
+  .register-step-ornament {
+    min-height: 132px;
+    border-inline-end: 0;
+    border-bottom: 1px solid rgba(34, 34, 34, 0.1);
+    border-inline-start: 0;
+  }
+}
+
 .architecture-page {
   background: #efe9e1;
   min-height: 60vh;
@@ -1102,6 +1413,90 @@
 }
 
 @media (max-width: 768px) {
+  .register-page {
+    padding: 28px 0 24px;
+  }
+
+  .register-hero-section {
+    margin-bottom: 20px;
+  }
+
+  .register-hero-copy {
+    gap: 12px;
+  }
+
+  .register-hero-title {
+    font-size: clamp(2rem, 9vw, 3.15rem);
+    line-height: 1.04;
+  }
+
+  .register-hero-lead,
+  .register-step-summary-lead,
+  .register-step-paragraph {
+    font-size: 0.97rem;
+    line-height: 1.75;
+  }
+
+  .register-steps-rail {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .register-steps-rail::before {
+    top: 22px;
+    inset-inline: 32px;
+  }
+
+  .register-step-tab {
+    flex-basis: 152px;
+    gap: 8px;
+    padding: 0 8px 14px;
+  }
+
+  .register-step-marker {
+    width: 44px;
+    height: 44px;
+    font-size: 0.94rem;
+  }
+
+  .register-step-phase {
+    font-size: 0.74rem;
+  }
+
+  .register-step-title {
+    font-size: 0.86rem;
+  }
+
+  .register-step-card {
+    gap: 14px;
+  }
+
+  .register-step-copy {
+    gap: 12px;
+    padding: 18px 18px 0;
+  }
+
+  .register-step-summary-title {
+    font-size: clamp(1.55rem, 7vw, 2.2rem);
+    line-height: 1.12;
+  }
+
+  .register-step-ornament {
+    min-height: 108px;
+  }
+
+  .register-step-card-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .register-cta-button {
+    width: 100%;
+    min-width: 0;
+    padding: 16px 22px;
+    font-size: 0.96rem;
+  }
+
   .plans-page {
     padding: 28px 0 24px;
   }
